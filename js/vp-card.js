@@ -112,9 +112,16 @@ function getPrimarySetup(d) {
 const fmt = (n) => n ? `$${Number(n).toLocaleString()}` : '—';
 const fmtTime = (iso) => {
   try {
-    return new Date(iso).toLocaleTimeString([], {
-      hour: '2-digit', minute: '2-digit'
-    }) + ' UTC';
+    const d = new Date(iso);
+    return d.toLocaleDateString([], { month: 'short', day: 'numeric' }) + ' ' +
+           d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' UTC';
+  } catch { return iso; }
+};
+// ── Format date for display ─────────────────────
+const fmtDate = (iso) => {
+  try {
+    const d = new Date(iso);
+    return d.toLocaleDateString([], { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
   } catch { return iso; }
 };
 
@@ -158,6 +165,106 @@ function renderTradeSetup(setup, label, session) {
       <span class="trade-value" style="color:#6b7280">${fmt(setup.invalidation)}</span>
     </div>` : ''}
   </div>`;
+}
+
+// ── Bottom-line conclusion for beginners ──────────
+function renderVerdict(d, shape, state) {
+  const price = d.btc_price || 0;
+  const poc = d.poc;
+  const vah = d.vah;
+  const val = d.val;
+  const hvn = d.hvn_range;
+  const bias = d.strategy_bias;
+  const dir = d.direction || 'LONG';
+  const amtLock = d.amt_lockout;
+  const sizeRec = d.size_recommendation;
+
+  const bullets = [];
+
+  // Where is price?
+  if (state === 'ACCEPTANCE') {
+    bullets.push(`Price at <strong>${fmt(price)}</strong> — inside the Value Area (normal range, no breakout)`);
+  } else if (state === 'REJECTION_UP') {
+    bullets.push(`Price at <strong>${fmt(price)}</strong> — <span class="t-green">above VAH</span> (bullish breakout in progress)`);
+  } else {
+    bullets.push(`Price at <strong>${fmt(price)}</strong> — <span class="t-red">below VAL</span> (bearish breakdown in progress)`);
+  }
+
+  // POC magnet
+  bullets.push(`Primary magnet at <strong>${fmt(poc)}</strong> — price tends to get pulled toward the busiest level`);
+
+  // VAH/VAL touches
+  const vahT = d.touch_count_vah || 0;
+  const valT = d.touch_count_val || 0;
+  if (vahT === 0 && valT === 0) {
+    bullets.push(`No VAH/VAL touches yet — the edges of fair value haven't been tested`);
+  } else {
+    if (vahT > 0) bullets.push(`VAH touched <strong>${vahT}×</strong> — resistance is being tested`);
+    if (valT > 0) bullets.push(`VAL touched <strong>${valT}×</strong> — support is being tested`);
+  }
+
+  // HVN magnet zone
+  if (hvn && hvn !== 'N/A') {
+    bullets.push(`HVN magnet zone at <strong>$${hvn.replace(/-/g, '–$')}</strong> — thick trading area, strong support/resistance`);
+  }
+
+  // Strategy summary
+  const biasSummary = {
+    FADE: 'Fade the extremes — buy near VAL, sell near VAH',
+    FOLLOW: 'Follow the trend — buy pullbacks (uptrend) or sell bounces (downtrend)',
+    WAIT: 'Wait for a clearer signal before entering',
+  };
+  const dirSummary = {
+    LONG: 'looking to buy',
+    SHORT: 'looking to sell',
+    DUAL: 'watching both directions',
+  };
+  bullets.push(`Strategy: <strong>${biasSummary[bias] || bias}</strong>, ${dirSummary[dir] || dir}`);
+
+  // Size / AMT note
+  if (sizeRec && sizeRec !== 'NORMAL') {
+    bullets.push(`Position sizing: <strong>${sizeRec.replace(/_/g, ' ')}</strong> — adjust risk accordingly`);
+  }
+  if (amtLock) {
+    bullets.push(`<span class="t-orange">⚠ AMT bot is active</span> — automated trading may affect price action`);
+  }
+
+  return `<div class="vp-verdict">
+    <div class="verdict-title">📋 Bottom Line</div>
+    <ul class="verdict-list">
+      ${bullets.map(b => `<li>${b}</li>`).join('\n      ')}
+    </ul>
+  </div>`;
+}
+
+// ── Pill legend (what each badge means) ───────────
+function renderPillLegend(direction, state, bias, prob, amtLock) {
+  // Only show on first render — toggle visibility
+  return `<details class="vp-legend">
+    <summary class="legend-toggle">ℹ️ What do these mean?</summary>
+    <div class="legend-body">
+      <div class="legend-item">
+        <span class="legend-key dir--short">SHORT</span>
+        <span class="legend-desc">Trade direction — the card suggests a <strong>sell</strong> setup. Opposite: LONG = buy.</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-key pill--acceptance">ACCEPTANCE</span>
+        <span class="legend-desc">Price is <strong>inside</strong> the Value Area — no breakout happening. Normal, sideways market.</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-key pill--fade">FADE</span>
+        <span class="legend-desc">Strategy bias — <strong>fade the extremes</strong>. Buy near VAL (support), sell near VAH (resistance).</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-key pill--baseline">BASELINE</span>
+        <span class="legend-desc">Confidence tier — <strong>standard signal</strong>. The setup meets baseline criteria but isn't reinforced by extra factors.</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-key pill--lockout">AMT LOCKOUT</span>
+        <span class="legend-desc"><strong>AMT bot is running</strong> — an automated trading bot is active. Price may behave differently than usual.</span>
+      </div>
+    </div>
+  </details>`;
 }
 
 // ── Render card ───────────────────────────────────
@@ -216,6 +323,7 @@ function renderVPCard(raw, mountId = 'vp-card-mount') {
     ${probPill(d.probability_tier)}
     ${lockoutPill}
   </div>
+  ${renderPillLegend(direction, state, d.strategy_bias, d.probability_tier, d.amt_lockout)}
 
   <div class="vp-levels">
     <div class="vp-level-item level-poc"
@@ -243,6 +351,8 @@ function renderVPCard(raw, mountId = 'vp-card-mount') {
       <div class="level-sub">Magnet zone</div>
     </div>
   </div>
+
+  ${renderVerdict(d, shape, state)}
 
   ${tradeBlock}
 
