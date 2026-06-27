@@ -56,7 +56,8 @@
   display: flex;
   gap: 8px;
   margin-bottom: 14px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
 }
 
 .vp-pill {
