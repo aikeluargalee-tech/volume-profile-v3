@@ -1,6 +1,7 @@
 {
   "vp_card": {
     "shape": "D",
+    "direction": "SHORT",
     "poc": 60486,
     "vah": 60494,
     "val": 60454,
@@ -17,17 +18,29 @@
     "amt_lockout": true,
     "amt_verdict": "NO_TRADE",
     "adx": 0,
-    "entry_level": 60452,
+    "entry_level": 60496,
     "t1": 60486,
-    "t2": 60494,
-    "stop_loss": 60442,
-    "invalidation": 60498,
-    "rr_t1": 3.4,
-    "rr_t2": 4.2,
+    "t2": 60454,
+    "stop_loss": 60500,
+    "invalidation": 60504,
+    "rr_t1": 2.5,
+    "rr_t2": 10.5,
     "size_recommendation": "SKIP",
+    "trade_setups": [
+      {
+        "direction": "SHORT",
+        "entry": 60496,
+        "t1": 60486,
+        "t2": 60454,
+        "stop_loss": 60500,
+        "invalidation": 60504,
+        "rr_t1": 2.5,
+        "rr_t2": 10.5
+      }
+    ],
     "btc_price": 60484,
     "session": "LONDON",
-    "last_updated": "2026-06-27T12:06:43.670616+00:00"
+    "last_updated": "2026-06-27T12:53:25.152860+00:00"
   },
   "chart_data": {
     "bin_size": 1,
