@@ -28,5 +28,31 @@
     "btc_price": 60490,
     "session": "LONDON",
     "last_updated": "2026-06-27T08:02:00Z"
+  },
+  "chart_data": {
+    "bin_size": 50,
+    "max_volume": 2100,
+    "bins": [
+      { "price": 61200, "volume": 180, "type": "lvn" },
+      { "price": 61000, "volume": 250, "type": "normal" },
+      { "price": 60750, "volume": 420, "type": "vah" },
+      { "price": 60700, "volume": 610, "type": "hvn" },
+      { "price": 60650, "volume": 730, "type": "hvn" },
+      { "price": 60400, "volume": 550, "type": "normal" },
+      { "price": 60200, "volume": 380, "type": "normal" },
+      { "price": 60000, "volume": 890, "type": "hvn" },
+      { "price": 59800, "volume": 2100, "type": "poc" },
+      { "price": 59600, "volume": 720, "type": "hvn" },
+      { "price": 59400, "volume": 890, "type": "hvn" },
+      { "price": 59200, "volume": 450, "type": "normal" },
+      { "price": 59000, "volume": 320, "type": "normal" },
+      { "price": 58700, "volume": 510, "type": "normal" },
+      { "price": 58500, "volume": 640, "type": "val" },
+      { "price": 58350, "volume": 280, "type": "normal" },
+      { "price": 58200, "volume": 190, "type": "lvn" },
+      { "price": 58000, "volume": 140, "type": "lvn" },
+      { "price": 57800, "volume": 200, "type": "normal" },
+      { "price": 57600, "volume": 160, "type": "normal" }
+    ]
   }
 }

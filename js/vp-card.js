@@ -167,10 +167,17 @@ function renderVPCard(raw, mountId = 'vp-card-mount') {
     <a class="vp-link-btn" href="#liquidity-card">↗ Liquidity — CVD/Absorption</a>
   </div>
 
+  <canvas id="vp-chart-canvas" class="vp-chart" width="600" height="400"></canvas>
+
 </div>`;
 
   const mount = document.getElementById(mountId);
   if (mount) mount.innerHTML = html;
+
+  // Render chart if chart_data present
+  if (raw.chart_data && raw.chart_data.bins) {
+    renderVPChart(raw.chart_data, 'vp-chart-canvas');
+  }
 }
 
 // ── Fetch + render ────────────────────────────────

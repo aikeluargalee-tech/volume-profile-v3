@@ -184,3 +184,12 @@
   .vp-levels { grid-template-columns: 1fr 1fr 1fr 1fr; }
   .vp-shape-badge { font-size: 26px; }
 }
+
+/* Volume Profile chart */
+.vp-chart {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-top: 12px;
+  background: #111827;
+}
