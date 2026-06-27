@@ -233,10 +233,52 @@
         font-size: 11px;
       }
     }
+
+    /* ── Skeleton loading (prevents FOUC) ──── */
+    .vp-skeleton { position: relative; overflow: hidden; }
+    .skel-line, .skel-block, .skel-pill {
+      display: inline-block;
+      background: #1f2937;
+      border-radius: 4px;
+      animation: skel-pulse 1.5s ease-in-out infinite;
+    }
+    .skel-line { height: 12px; width: 100%; margin: 4px 0; }
+    .skel-line--sm { width: 50%; }
+    .skel-line--lg { height: 18px; width: 80%; }
+    .skel-block { height: 48px; width: 100%; margin: 8px 0; }
+    .skel-block--lg { height: 60px; }
+    .skel-row { display: flex; gap: 8px; margin: 8px 0; flex-wrap: nowrap; }
+    .skel-pill { height: 22px; width: 80px; border-radius: 20px; }
+    .skel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 8px 0; }
+    .skel-cell { display: flex; flex-direction: column; gap: 4px; }
+    @keyframes skel-pulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.6; }
+    }
   </style>
 </head>
 <body>
-  <div id="vp-card-mount"></div>
+  <div id="vp-card-mount">
+    <div class="vp-card vp-skeleton">
+      <div class="vp-card___header">
+        <span class="vp-cardtitle">Volume Profile</span>
+        <span class="skel-line skel-line--sm"></span>
+      </div>
+      <div class="skel-block skel-block--lg"></div>
+      <div class="skel-row">
+        <span class="skel-pill"></span>
+        <span class="skel-pill"></span>
+        <span class="skel-pill"></span>
+        <span class="skel-pill"></span>
+      </div>
+      <div class="skel-grid">
+        <div class="skel-cell"><span class="skel-line"></span><span class="skel-line skel-line--lg"></span></div>
+        <div class="skel-cell"><span class="skel-line"></span><span class="skel-line skel-line--lg"></span></div>
+        <div class="skel-cell"><span class="skel-line"></span><span class="skel-line skel-line--lg"></span></div>
+        <div class="skel-cell"><span class="skel-line"></span><span class="skel-line skel-line--lg"></span></div>
+      </div>
+    </div>
+  </div>
 
   <section class="vp-guide">
 
