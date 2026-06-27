@@ -1,0 +1,32 @@
+{
+  "vp_card": {
+    "shape": "D",
+    "poc": 59800,
+    "vah": 60760,
+    "val": 58500,
+    "hvn_range": "59100-60600",
+    "touch_count_val": 2,
+    "touch_count_vah": 1,
+    "probability_tier": "HIGH",
+    "acceptance_rejection_state": "ACCEPTANCE",
+    "rejection_direction": null,
+    "consecutive_closes_outside_va": 0,
+    "confirmation_status": "PENDING",
+    "active_pattern": "POC_MAGNET",
+    "strategy_bias": "FADE",
+    "amt_lockout": true,
+    "amt_verdict": "NO_TRADE",
+    "adx": 31.8,
+    "entry_level": 58250,
+    "t1": 59800,
+    "t2": 60760,
+    "stop_loss": 57400,
+    "invalidation": 61761,
+    "rr_t1": 1.8,
+    "rr_t2": 2.95,
+    "size_recommendation": "50_PERCENT",
+    "btc_price": 60490,
+    "session": "LONDON",
+    "last_updated": "2026-06-27T08:02:00Z"
+  }
+}
