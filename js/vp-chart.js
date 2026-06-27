@@ -144,6 +144,21 @@ function renderVPChart(raw, containerId = 'vp-chart-container') {
     if (assignedRow > maxRow) maxRow = assignedRow;
   }
 
+  // Nudge: labels on lower rows offset right so text doesn't overlap row-0 labels on mobile
+  for (const lbl of labels) {
+    lbl.nudgeRight = 0;
+    if (lbl.row > 0) {
+      const row0Pcts = rows[0] || [];
+      for (const pct of row0Pcts) {
+        const gapPct = lbl.pct - pct;
+        if (gapPct > 0 && gapPct < minPctGap + 6) {
+          lbl.nudgeRight = Math.round((minPctGap + 6 - gapPct) * 3.5);
+          break;
+        }
+      }
+    }
+  }
+
   // Render labels row
   chartHtml += `
     <div class="vp-labels-row-horizontal" style="height: ${38 + maxRow * 16}px">
@@ -151,8 +166,9 @@ function renderVPChart(raw, containerId = 'vp-chart-container') {
 
   for (const lbl of labels) {
     const dashedLineHeight = 116 + lbl.row * 16;
+    const nudgeStyle = lbl.nudgeRight ? `padding-left: ${lbl.nudgeRight}px` : '';
     chartHtml += `
-      <div class="vp-x-label ${lbl.colorClass}" style="left: ${lbl.pct}%; top: ${lbl.row * 16}px">
+      <div class="vp-x-label ${lbl.colorClass}" style="left: ${lbl.pct}%; top: ${lbl.row * 16}px; ${nudgeStyle}">
         <div class="vp-line-dashed ${lbl.colorClass}-line" style="height: ${dashedLineHeight}px"></div>
         <span class="vp-label-title">${lbl.name}</span><br>$${Number(lbl.price).toLocaleString()}
       </div>
