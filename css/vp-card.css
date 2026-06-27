@@ -193,8 +193,11 @@
 /* Volume Profile chart */
 .vp-chart {
   width: 100%;
+  max-width: 100%;
   height: auto;
   border-radius: 8px;
   margin-top: 12px;
   background: #111827;
+  display: block;
+  overflow: hidden;
 }
