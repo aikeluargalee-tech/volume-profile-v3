@@ -190,14 +190,132 @@
   .vp-shape-badge { font-size: 26px; }
 }
 
-/* Volume Profile chart */
+/* Volume Profile chart container */
 .vp-chart {
   width: 100%;
   max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-  margin-top: 12px;
+  border-radius: 12px;
+  margin-top: 16px;
   background: #111827;
-  display: block;
+  border: 1px solid #1f2937;
+  padding: 12px 14px 14px 14px;
+  box-sizing: border-box;
   overflow: hidden;
+}
+
+.vp-chart-container-horizontal {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Horizontal chart layout */
+.vp-chart-horizontal {
+  display: flex;
+  align-items: flex-end;
+  height: 110px;
+  gap: 2px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Single vertical column bar */
+.vp-bar-horizontal {
+  flex: 1;
+  min-width: 2px;
+  border-radius: 2px 2px 0 0;
+  transition: height 0.3s ease;
+}
+
+/* Colors matching requirement 4: POC=yellow, VAH=red, VAL=green, HVN=purple, LVN=dim */
+.vp-bar-horizontal.poc {
+  background: #facc15;
+  box-shadow: 0 0 8px rgba(250, 204, 21, 0.5);
+}
+.vp-bar-horizontal.vah {
+  background: #f87171;
+}
+.vp-bar-horizontal.val {
+  background: #34d399;
+}
+.vp-bar-horizontal.hvn {
+  background: #a78bfa;
+}
+.vp-bar-horizontal.lvn {
+  background: rgba(55, 65, 81, 0.3);
+}
+.vp-bar-horizontal.normal {
+  background: rgba(75, 85, 99, 0.4);
+}
+
+/* NOW Marker & Track */
+.vp-now-track-horizontal {
+  position: relative;
+  height: 16px;
+  margin-bottom: 6px;
+  width: 100%;
+}
+.vp-now-marker {
+  position: absolute;
+  transform: translateX(-50%);
+  font-family: monospace;
+  font-size: 9px;
+  color: #60a5fa;
+  white-space: nowrap;
+  font-weight: bold;
+}
+
+/* Labels under the chart */
+.vp-labels-row-horizontal {
+  position: relative;
+  margin-top: 4px;
+  width: 100%;
+}
+
+.vp-x-label {
+  position: absolute;
+  transform: translateX(-50%);
+  text-align: center;
+  font-family: monospace;
+  font-size: 10px;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+/* Labels colors */
+.vp-x-label.poc { color: #facc15; }
+.vp-x-label.vah { color: #f87171; }
+.vp-x-label.val { color: #34d399; }
+
+.vp-label-title {
+  font-weight: 800;
+  font-size: 9px;
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+.vp-x-label.poc .vp-label-title { background: rgba(250, 204, 21, 0.15); }
+.vp-x-label.vah .vp-label-title { background: rgba(248, 113, 113, 0.15); }
+.vp-x-label.val .vp-label-title { background: rgba(52, 211, 153, 0.15); }
+
+/* Vertical dashed lines extending up through chart */
+.vp-line-dashed {
+  position: absolute;
+  bottom: 30px; /* offset to start above the label text */
+  left: 50%;
+  border-left: 1px dashed;
+  pointer-events: none;
+  opacity: 0.35;
+}
+.val-line { border-left-color: #34d399; }
+.poc-line { border-left-color: #facc15; }
+.vah-line { border-left-color: #f87171; }
+
+.vp-chart-info-label {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 10px;
+  color: #6b7280;
+  font-family: monospace;
 }
