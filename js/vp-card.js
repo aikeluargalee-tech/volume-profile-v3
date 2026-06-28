@@ -124,6 +124,14 @@ const fmtDate = (iso) => {
     return d.toLocaleDateString([], { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
   } catch { return iso; }
 };
+// ── Format next update time (+60s from last_updated)
+const fmtNextUpdate = (iso) => {
+  try {
+    const d = new Date(iso);
+    d.setSeconds(d.getSeconds() + 60);
+    return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' UTC';
+  } catch { return '—'; }
+};
 
 // ── Trade setup block HTML (for one setup) ─────────
 function renderTradeSetup(setup, label, session) {
@@ -308,7 +316,7 @@ function renderVPCard(raw, mountId = 'vp-card-mount') {
 
   <div class="vp-card___header">
     <span class="vp-cardtitle">Volume Profile</span>
-    <span class="vp-card___updated">Updated ${fmtTime(d.last_updated)}</span>
+    <span class="vp-card___updated">Updated ${fmtTime(d.last_updated)} · Next ${fmtNextUpdate(d.last_updated)}</span>
   </div>
 
   <div class="vp-shape-badge ${sc.cls}" title="Market structure: ${sc.label} — ${sc.desc}">
