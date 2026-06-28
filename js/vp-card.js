@@ -286,10 +286,6 @@ function renderVPCard(raw, mountId = 'vp-card-mount') {
   const isDual = direction === 'DUAL' && setups.length === 2;
   const primary = getPrimarySetup(d);
 
-  const lockoutPill = d.amt_lockout
-    ? `<span class="vp-pill pill--lockout" title="Aggressive Market Tape bot active — trade with caution">AMT LOCKOUT</span>`
-    : `<span class="vp-pill pill--clear" title="AMT bot not active — normal trading">AMT CLEAR</span>`;
-
   // Trade block HTML
   let tradeBlock = '';
   if (isDual) {
@@ -323,15 +319,6 @@ function renderVPCard(raw, mountId = 'vp-card-mount') {
     <span class="shape-label">${sc.label}</span>
     <span class="shape-desc">${sc.desc}</span>
   </div>
-
-  <div class="vp-state-row">
-    ${directionBadge(direction)}
-    ${statePill(state)}
-    ${biasPill(d.strategy_bias)}
-    ${probPill(d.probability_tier)}
-    ${lockoutPill}
-  </div>
-  ${renderPillLegend(direction, state, d.strategy_bias, d.probability_tier, d.amt_lockout)}
 
   <div class="vp-levels">
     <div class="vp-level-item level-poc"
