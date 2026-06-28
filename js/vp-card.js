@@ -5,7 +5,7 @@ const VP_JSON_PATH = './data/vp_card.json'; // adjust to your path
 
 // ── Shape config ─────────────────────────────────
 const SHAPE_CONFIG = {
-  D: { cls: 'shape--D', label: 'Range (D)',    desc: 'Sideways — buy low, sell high' },
+  D: { cls: 'shape--D', label: 'Range (D)',    desc: 'Price moving sideways — buy near the floor, sell near the ceiling' },
   P: { cls: 'shape--P', label: 'Trend Up (P)',  desc: 'Bulls in control — follow the trend' },
   b: { cls: 'shape--b', label: 'Trend Down (b)', desc: 'Bears in control — don\'t fight it' },
   B: { cls: 'shape--B', label: 'Dual Zone (B)',  desc: 'Two trading zones — wait for direction' },
