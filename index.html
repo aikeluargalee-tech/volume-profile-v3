@@ -4,23 +4,28 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Volume Profile V3.0 — BTC Market Structure</title>
-  <link rel="stylesheet" href="css/vp-card.css?v=6" />
+  <link rel="stylesheet" href="css/vp-card.css?v=5" />
   <style>
     /* ── Base ──────────────────────────────── */
     body {
       background: #0d1117;
-      padding: 16px 0;
+      padding: 16px;
       margin: 0;
       font-family: 'Inter', monospace, sans-serif;
       color: #e5e7eb;
     }
 
+    /* ── VP Card wrapper — same width as guide ─ */
+    #vp-card-mount {
+      max-width: 720px;
+      margin: 0 auto 32px;
+      overflow: hidden;
+    }
+
     /* ── Guide Section ─────────────────────── */
     .vp-guide {
-      max-width: 1024px;
+      max-width: 720px;
       margin: 32px auto 48px;
-      padding: 0 16px;
-      box-sizing: border-box;
     }
 
     .vp-guide h2 {
@@ -248,6 +253,7 @@
     .skel-line--sm { width: 50%; }
     .skel-line--lg { height: 18px; width: 80%; }
     .skel-block { height: 48px; width: 100%; margin: 8px 0; }
+    .skel-block--lg { height: 60px; }
     .skel-row { display: flex; gap: 8px; margin: 8px 0; flex-wrap: nowrap; }
     .skel-pill { height: 22px; width: 80px; border-radius: 20px; }
     .skel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 8px 0; }
@@ -259,51 +265,28 @@
   </style>
 </head>
 <body>
-
-  <!-- ── Page Header ───────────────────────── -->
-  <header class="dashboard-header">
-    <div>
-      <h1>Volume Profile V3.0</h1>
-      <p class="subtitle">BTC Market Structure Decision Engine</p>
-    </div>
-    <button id="expert-toggle" class="toggle-btn" aria-label="Toggle Expert Mode">
-      <span class="toggle-icon">👁️</span>
-      <span class="toggle-text">Switch to Expert Mode</span>
-    </button>
-  </header>
-
-  <!-- ── Card Mount Area ───────────────────── -->
   <div id="vp-card-mount">
     <div class="vp-card vp-skeleton">
       <div class="vp-card___header">
-        <span class="vp-cardtitle">Volume Profile V3.0</span>
+        <span class="vp-cardtitle">Volume Profile</span>
         <span class="skel-line skel-line--sm"></span>
       </div>
-      <div class="vp-card-grid-skeleton">
-        <div class="skel-chart-col">
-          <div class="skel-vertical-chart"></div>
-        </div>
-        <div class="skel-info-col">
-          <div class="skel-block" style="height: 40px; margin-bottom: 10px;"></div>
-          <div class="skel-row">
-            <span class="skel-pill"></span>
-            <span class="skel-pill"></span>
-            <span class="skel-pill"></span>
-            <span class="skel-pill"></span>
-          </div>
-          <div class="skel-block" style="height: 80px; margin-top: 10px; margin-bottom: 10px;"></div>
-          <div class="skel-grid">
-            <div class="skel-cell"><span class="skel-line"></span><span class="skel-line skel-line--lg"></span></div>
-            <div class="skel-cell"><span class="skel-line"></span><span class="skel-line skel-line--lg"></span></div>
-            <div class="skel-cell"><span class="skel-line"></span><span class="skel-line skel-line--lg"></span></div>
-            <div class="skel-cell"><span class="skel-line"></span><span class="skel-line skel-line--lg"></span></div>
-          </div>
-        </div>
+      <div class="skel-block skel-block--lg"></div>
+      <div class="skel-row">
+        <span class="skel-pill"></span>
+        <span class="skel-pill"></span>
+        <span class="skel-pill"></span>
+        <span class="skel-pill"></span>
+      </div>
+      <div class="skel-grid">
+        <div class="skel-cell"><span class="skel-line"></span><span class="skel-line skel-line--lg"></span></div>
+        <div class="skel-cell"><span class="skel-line"></span><span class="skel-line skel-line--lg"></span></div>
+        <div class="skel-cell"><span class="skel-line"></span><span class="skel-line skel-line--lg"></span></div>
+        <div class="skel-cell"><span class="skel-line"></span><span class="skel-line skel-line--lg"></span></div>
       </div>
     </div>
   </div>
 
-  <!-- ── Guide Section ─────────────────────── -->
   <section class="vp-guide">
 
     <!-- ── WHAT IS VOLUME PROFILE ──────────── -->
@@ -316,8 +299,8 @@
         Think of it like a building: the <strong>widest floors</strong> had the most activity — those are prices where traders agreed value exists. The <strong>narrow floors</strong> are prices traders rushed through without much interest.
       </p>
       <ul>
-        <li><strong>Wide bars</strong> = heavy trading = strong support or resistance (value area)</li>
-        <li><strong>Thin bars</strong> = light trading = price moves fast through these levels (low activity gap)</li>
+        <li><strong>Wide bars</strong> = heavy trading = strong support or resistance</li>
+        <li><strong>Thin bars</strong> = light trading = price moves fast through these levels</li>
       </ul>
     </div>
 
@@ -325,43 +308,43 @@
     <div class="guide-card">
       <h3>🔷 The 4 Market Shapes</h3>
       <p>
-        The VP card analyzes price relative to the Value Area (the zone where 70% of trading happened) and assigns one of four shapes based on the volume profile curve:
+        The VP card analyzes price relative to the Value Area (the zone where 70% of trading happened) and assigns one of four shapes:
       </p>
 
       <div class="shape-grid">
         <div class="shape-tile shape-tile--D">
           <span class="shape-icon">D</span>
-          <span class="shape-name">Balanced Range (D-shape)</span>
+          <span class="shape-name">Range — Sideways</span>
           <span class="shape-how">
-            Volume is centered in the middle. Price is <strong>stuck between a ceiling and floor</strong>.<br>
-            ➜ Buy near the floor (VAL), sell near the ceiling (VAH), fade to the center.
+            Price is <strong>stuck between a ceiling and floor</strong>. No breakout yet.<br>
+            ➜ Buy near the floor (VAL), sell near the ceiling (VAH)
           </span>
         </div>
 
         <div class="shape-tile shape-tile--P">
           <span class="shape-icon">P</span>
-          <span class="shape-name">Bullish Trend (P-shape)</span>
+          <span class="shape-name">Bullish — Up Trend</span>
           <span class="shape-how">
-            Volume is concentrated at the top. Price has <strong>broken above the ceiling</strong>.<br>
-            ➜ Buy pullbacks, ride breakout momentum in control of bulls.
+            Price has <strong>broken above the ceiling</strong>. Bulls in control.<br>
+            ➜ Look for pullbacks to buy, follow the trend
           </span>
         </div>
 
         <div class="shape-tile shape-tile--b">
           <span class="shape-icon">b</span>
-          <span class="shape-name">Bearish Trend (b-shape)</span>
+          <span class="shape-name">Bearish — Down Trend</span>
           <span class="shape-how">
-            Volume is concentrated at the bottom. Price has <strong>broken below the floor</strong>.<br>
-            ➜ Sell rallies, ride breakdown momentum in control of bears.
+            Price has <strong>broken below the floor</strong>. Bears in control.<br>
+            ➜ Look for bounces to sell, don't fight the trend
           </span>
         </div>
 
         <div class="shape-tile shape-tile--B">
           <span class="shape-icon">B</span>
-          <span class="shape-name">Double Range (B-shape)</span>
+          <span class="shape-name">Dual Zone — Volatile</span>
           <span class="shape-how">
-            <strong>Two separate trading zones</strong> have formed with a gap between them.<br>
-            ➜ Trade each zone independently, wait for a breakout from the middle gap.
+            <strong>Two separate trading zones</strong> formed. Price swings between them.<br>
+            ➜ Wait for a clear direction before entering
           </span>
         </div>
       </div>
@@ -371,7 +354,7 @@
     <div class="guide-card">
       <h3>📍 Reading the Chart</h3>
       <p>
-        The vertical histogram shows volume at each price level (highest price at top, lowest at bottom). Here's what the colored levels mean:
+        The histogram on the card shows volume at each price. Here's what the colored levels mean:
       </p>
 
       <table class="elem-table">
@@ -387,35 +370,35 @@
             <td><span class="dot dot--poc"></span></td>
             <td class="el-name">POC</td>
             <td class="el-role">
-              <strong>Point of Control (Busiest Price)</strong> — the single busiest price. Acts like a <strong>magnet</strong>: price often returns here. Key level for entries and targets.
+              <strong>Point of Control</strong> — the single busiest price. Acts like a <strong>magnet</strong>: price often returns here. Key level for entries and targets.
             </td>
           </tr>
           <tr>
             <td><span class="dot dot--vah"></span></td>
             <td class="el-name">VAH</td>
             <td class="el-role">
-              <strong>Value Area High (Price Ceiling)</strong> — the upper ceiling of "fair value." Above this, price is expensive. Breakout point for bulls.
+              <strong>Value Area High</strong> — the ceiling of "fair value." Above this, price is expensive relative to recent activity. Breakout point for bulls.
             </td>
           </tr>
           <tr>
             <td><span class="dot dot--val"></span></td>
             <td class="el-name">VAL</td>
             <td class="el-role">
-              <strong>Value Area Low (Price Floor)</strong> — the lower floor of "fair value." Below this, price is cheap. Support level and breakdown point for bears.
+              <strong>Value Area Low</strong> — the floor of "fair value." Below this, price is cheap. Support level and breakout point for bears.
             </td>
           </tr>
           <tr>
             <td><span class="dot dot--hvn"></span></td>
             <td class="el-name">HVN</td>
             <td class="el-role">
-              <strong>High Volume Node (High Activity Zone)</strong> — a thick price zone with heavy trading. Strong <strong>support or resistance</strong> where price often pauses.
+              <strong>High Volume Node</strong> — a thick price zone with heavy trading. Strong <strong>support or resistance</strong>. Price often pauses here.
             </td>
           </tr>
           <tr>
             <td><span class="dot dot--lvn"></span></td>
             <td class="el-name">LVN</td>
             <td class="el-role">
-              <strong>Low Volume Node (Low Activity Gap)</strong> — a thin zone with little trading. Price <strong>moves fast</strong> through these gaps. Useful for setting targets.
+              <strong>Low Volume Node</strong> — a thin zone with little trading. Price <strong>moves fast</strong> through these gaps. Useful for setting targets.
             </td>
           </tr>
         </tbody>
@@ -429,25 +412,25 @@
         <div class="howto-step">
           <span class="step-num">1</span>
           <span class="step-text">
-            <strong>Check the Shape</strong> — Balanced Range (D), Bullish (P), Bearish (b), or Double Range (B) tells you the current market personality.
+            <strong>Check the Shape</strong> — D, P, b, or B tells you the current market personality. Is it ranging? Trending up? Trending down? Confused?
           </span>
         </div>
         <div class="howto-step">
           <span class="step-num">2</span>
           <span class="step-text">
-            <strong>Look at the State</strong> — <em>Normal Range (Acceptance)</em> means price rotates inside. <em>Breakout (Rejection)</em> means price broke out and stayed out — a new trend is forming.
+            <strong>Look at the State</strong> — <em>Acceptance</em> means price is inside fair value (normal). <em>Rejection</em> means price broke out and stayed out — a move may be starting.
           </span>
         </div>
         <div class="howto-step">
           <span class="step-num">3</span>
           <span class="step-text">
-            <strong>Check the Decision Path</strong> — The Live Decision Path checklist shows how the signal stacks up, noting bot lockout warnings or signal strength.
+            <strong>Read the Pills</strong> — Strategy Bias (FADE, FOLLOW, WAIT) is your cheat sheet. Probability Tier tells you how confident the signal is. AMT Lockout warns if the aggressive trading bot is active.
           </span>
         </div>
         <div class="howto-step">
           <span class="step-num">4</span>
           <span class="step-text">
-            <strong>Execute with the Visual Gauge</strong> — The side-by-side trade setup thermometer gauges map out the Entry, Target 1, Target 2, and Stop Loss visually so you see risk-reward at a glance.
+            <strong>Use the Levels</strong> — POC is your magnet. VAH/VAL are your boundaries. The Trade Setup block gives you a concrete plan: entry, targets (T1, T2), stop, and size.
           </span>
         </div>
       </div>
@@ -459,28 +442,28 @@
 
       <p class="faq-q">What does "Value Area" mean?</p>
       <p class="faq-a">
-        The Value Area is the price zone where <strong>70% of all trading volume</strong> happened during the session. Think of it as the "fair price range" — where most buyers and sellers agreed transaction value belongs.
+        The Value Area is the price zone where <strong>70% of all trading volume</strong> happened during the session. Think of it as the "fair price range" — where most traders agreed value belongs.
       </p>
 
       <p class="faq-q">Why does price return to the POC?</p>
       <p class="faq-a">
-        The POC is the single busiest level. Markets have memory: when price drifts away, it often gets <strong>pulled back</strong> to retest the highest-liquidity level before moving on. Traders call this the "magnet effect."
+        The POC is where the most volume traded — the most buyers and sellers agreed on price there. Markets have a memory: when price drifts away, it often gets <strong>pulled back</strong> to retest this level. Traders call this the "magnet effect."
       </p>
 
-      <p class="faq-q">What is the "Bot Active" warning?</p>
+      <p class="faq-q">When should I ignore the card?</p>
       <p class="faq-a">
-        When an automated trading bot (executing on Aggressive Market Tape) is highly active, price action can become extremely volatile and erratic. The card automatically detects this and suggests <strong>skipping or halving trade sizing</strong> to protect capital.
+        During <strong>major news events</strong> (Fed announcements, CPI data, etc.), volume profiles from before the event become stale. The B-Shape (Dual Zone) also signals uncertainty — the card may flip shapes quickly. In these cases, wait for a new profile to form.
       </p>
 
       <p class="faq-q">How often does the data update?</p>
       <p class="faq-a">
-        The card refreshes <strong>every 60 seconds</strong> automatically. Each session resets levels daily around the New York open (9:30 AM ET).
+        The card refreshes <strong>every 60 seconds</strong> automatically. Each session creates a new volume profile, so levels reset daily around the New York open (9:30 AM ET).
       </p>
     </div>
 
   </section>
 
-  <script src="js/vp-chart.js?v=6"></script>
-  <script src="js/vp-card.js?v=6"></script>
+  <script src="js/vp-chart.js?v=5"></script>
+  <script src="js/vp-card.js?v=5"></script>
 </body>
 </html>

@@ -1,14 +1,14 @@
-// vp-card.js — Volume Profile V3.0 Card Decision Engine
-// Reads vp_card.json, auto-computes shape/state, renders card grid
+// vp-card.js — Volume Profile V3.0 Card
+// Reads vp_card.json, auto-computes shape/state, renders card
 
-const VP_JSON_PATH = './data/vp_card.json';
+const VP_JSON_PATH = './data/vp_card.json'; // adjust to your path
 
-// ── Shape config with visual explanations ─────────
+// ── Shape config ─────────────────────────────────
 const SHAPE_CONFIG = {
-  D: { cls: 'shape--D', label: 'Balanced Range (D)',    desc: 'Volume centered (looks like D) — buy floor, sell ceiling' },
-  P: { cls: 'shape--P', label: 'Bullish Trend (P)',  desc: 'Volume high (looks like P) — buy pullback, follow breakout' },
-  b: { cls: 'shape--b', label: 'Bearish Trend (b)', desc: 'Volume low (looks like b) — sell rally, follow breakdown' },
-  B: { cls: 'shape--B', label: 'Double Range (B)',  desc: 'Two volume peaks (looks like B) — volatile, wait for breakout' },
+  D: { cls: 'shape--D', label: 'Range (D)',    desc: 'Sideways — buy low, sell high' },
+  P: { cls: 'shape--P', label: 'Trend Up (P)',  desc: 'Bulls in control — follow the trend' },
+  b: { cls: 'shape--b', label: 'Trend Down (b)', desc: 'Bears in control — don\'t fight it' },
+  B: { cls: 'shape--B', label: 'Dual Zone (B)',  desc: 'Two trading zones — wait for direction' },
 };
 
 // ── Auto-compute shape from pipeline data ─────────
@@ -17,7 +17,7 @@ function computeShape(d) {
   if (closes >= 2 && btc_price > vah) return 'P';
   if (closes >= 2 && btc_price < val) return 'b';
   if (btc_price >= val && btc_price <= vah && closes < 2) return 'D';
-  return d.shape || 'D'; // fallback
+  return d.shape || 'D'; // fallback to pipeline value
 }
 
 // ── Auto-compute accept/reject state ──────────────
@@ -31,16 +31,16 @@ function computeState(d) {
 // ── Probability tier pill ─────────────────────────
 function probPill(tier) {
   const tips = {
-    VERY_HIGH:  'Very high signal conviction — multiple structural confluences',
-    HIGH:       'High signal conviction',
-    REINFORCED: 'Signal reinforced by extra factors',
-    BASELINE:   'Standard baseline signal',
+    VERY_HIGH:  'Very strong — multiple indicators aligned',
+    HIGH:       'Strong signal confidence',
+    REINFORCED: 'Reinforced by additional factors',
+    BASELINE:   'Standard signal confidence',
   };
   const map = {
-    VERY_HIGH:  ['pill--very-high',  'VERY HIGH SIGNAL'],
-    HIGH:       ['pill--high',       'HIGH SIGNAL'],
-    REINFORCED: ['pill--reinforced', 'REINFORCED SIGNAL'],
-    BASELINE:   ['pill--baseline',   'STANDARD SIGNAL'],
+    VERY_HIGH:  ['pill--very-high',  'VERY HIGH'],
+    HIGH:       ['pill--high',       'HIGH'],
+    REINFORCED: ['pill--reinforced', 'REINFORCED'],
+    BASELINE:   ['pill--baseline',   'BASELINE'],
   };
   const [cls, label] = map[tier] || ['pill--baseline', tier];
   const tip = tips[tier] || '';
@@ -50,14 +50,14 @@ function probPill(tier) {
 // ── Strategy bias pill ────────────────────────────
 function biasPill(bias) {
   const tips = {
-    FADE:   'Trade the Range — buy support (floor), sell resistance (ceiling)',
-    FOLLOW: 'Trade the Trend — follow breakout momentum',
-    WAIT:   'Wait for Setup — stand aside, no clean signal',
+    FADE:   'Fade the extremes — buy at VAL, sell at VAH (range strategy)',
+    FOLLOW: 'Follow the trend — buy pullbacks in uptrend, sell bounces in downtrend',
+    WAIT:   'No clear signal — wait for confirmation before entering',
   };
   const map = {
-    FADE:   ['pill--fade',   'TRADE THE RANGE (FADE)'],
-    FOLLOW: ['pill--follow', 'TRADE THE TREND (FOLLOW)'],
-    WAIT:   ['pill--wait',   'WAIT FOR SETUP'],
+    FADE:   ['pill--fade',   'FADE'],
+    FOLLOW: ['pill--follow', 'FOLLOW'],
+    WAIT:   ['pill--wait',   'WAIT'],
   };
   const [cls, label] = map[bias] || ['pill--wait', bias];
   const tip = tips[bias] || '';
@@ -67,14 +67,14 @@ function biasPill(bias) {
 // ── State pill ────────────────────────────────────
 function statePill(state) {
   const tips = {
-    ACCEPTANCE:     'Price is inside the normal range — sideways rotation',
-    REJECTION_UP:   'Price broke above the ceiling and held — bullish breakout',
-    REJECTION_DOWN: 'Price broke below the floor and held — bearish breakdown',
+    ACCEPTANCE:     'Price is inside Value Area — normal, no breakout',
+    REJECTION_UP:   'Price broke above VAH and stayed there — bullish breakout',
+    REJECTION_DOWN: 'Price broke below VAL and stayed there — bearish breakdown',
   };
   const map = {
-    ACCEPTANCE:     ['pill--acceptance',     'INSIDE NORMAL RANGE'],
-    REJECTION_UP:   ['pill--rejection-up',   'BULLISH BREAKOUT ↑'],
-    REJECTION_DOWN: ['pill--rejection-down', 'BEARISH BREAKDOWN ↓'],
+    ACCEPTANCE:     ['pill--acceptance',     'ACCEPTANCE'],
+    REJECTION_UP:   ['pill--rejection-up',   'REJECTION ↑'],
+    REJECTION_DOWN: ['pill--rejection-down', 'REJECTION ↓'],
   };
   const [cls, label] = map[state] || ['pill--baseline', state];
   const tip = tips[state] || '';
@@ -84,9 +84,9 @@ function statePill(state) {
 // ── Direction badge ──────────────────────────────
 function directionBadge(dir) {
   const map = {
-    LONG:  ['dir--long',  'TRADE BIAS: LONG (BUY)',  'Looking for Buy setups'],
-    SHORT: ['dir--short', 'TRADE BIAS: SHORT (SELL)', 'Looking for Sell setups'],
-    DUAL:  ['dir--dual',  'TRADE BIAS: DUAL (WATCH)',  'Dual setup possibilities'],
+    LONG:  ['dir--long',  'LONG',  'Buy — entry below, targets above'],
+    SHORT: ['dir--short', 'SHORT', 'Sell — entry above, targets below'],
+    DUAL:  ['dir--dual',  'DUAL',  'Two trade setups — see below'],
   };
   const [cls, label, tip] = map[dir] || ['dir--long', dir, ''];
   return `<span class="vp-pill vp-dir-badge ${cls}" title="${tip}">${label}</span>`;
@@ -95,6 +95,7 @@ function directionBadge(dir) {
 // ── Primary trade setup from data ──────────────────
 function getPrimarySetup(d) {
   if (d.trade_setups && d.trade_setups.length > 0) return d.trade_setups[0];
+  // Fallback to flat fields (backward compat)
   return {
     direction: d.direction || 'LONG',
     entry: d.entry_level,
@@ -116,194 +117,57 @@ const fmtTime = (iso) => {
            d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' UTC';
   } catch { return iso; }
 };
+// ── Format date for display ─────────────────────
+const fmtDate = (iso) => {
+  try {
+    const d = new Date(iso);
+    return d.toLocaleDateString([], { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+  } catch { return iso; }
+};
 
-// ── Dynamic Decision Path Checklist ───────────────
-function renderDecisionChecklist(d, shape, state) {
-  const price = d.btc_price || 0;
-  const poc = d.poc;
-  const vah = d.vah;
-  const val = d.val;
-  const bias = d.strategy_bias;
-  const sizeRec = d.size_recommendation;
-  const lockout = d.amt_lockout;
-
-  // Step 1: Shape Details
-  let step1Desc = '';
-  if (shape === 'D') step1Desc = 'Balanced Range (D) — sideways distribution';
-  else if (shape === 'P') step1Desc = 'Bullish Trend (P) — volume concentrated at top';
-  else if (shape === 'b') step1Desc = 'Bearish Trend (b) — volume concentrated at bottom';
-  else if (shape === 'B') step1Desc = 'Double Range (B) — two active balanced zones';
-
-  // Step 2: Key Levels
-  const step2Desc = `Floor: ${fmt(val)} | Center (POC): ${fmt(poc)} | Ceiling: ${fmt(vah)}`;
-
-  // Step 3: Range State check
-  let step3Desc = '';
-  if (state === 'ACCEPTANCE') {
-    step3Desc = `Price accepts normal range (${fmt(price)} is inside)`;
-  } else if (state === 'REJECTION_UP') {
-    step3Desc = `Price rejects ceiling (${fmt(price)} broke above VAH)`;
-  } else if (state === 'REJECTION_DOWN') {
-    step3Desc = `Price rejects floor (${fmt(price)} broke below VAL)`;
-  }
-
-  // Step 4: Strategy selection
-  let step4Desc = '';
-  if (bias === 'FADE') {
-    step4Desc = 'Trade the Range (fade floor/ceiling, target center POC)';
-  } else if (bias === 'FOLLOW') {
-    step4Desc = 'Trade the Trend (buy breakouts, sell breakdowns)';
-  } else {
-    step4Desc = 'Wait for Setup (no clear direction)';
-  }
-
-  // Step 5: Risk & Sizing
-  let step5Desc = '';
-  if (lockout) {
-    step5Desc = 'Bot Active warning ➔ Size recommendations are skipped';
-  } else {
-    const sizeLabel = {
-      SKIP: 'Skip Trade',
-      '50_PERCENT': 'Half Size',
-      STANDARD: 'Standard Size',
-      FULL: 'Full Position'
-    }[sizeRec] || sizeRec;
-    step5Desc = `No Bot conflict ➔ Sizing: ${sizeLabel}`;
-  }
-
-  return `
-  <div class="live-checklist-card">
-    <div class="checklist-title">🧠 Live Decision Path</div>
-    <div class="checklist-steps">
-      <div class="checklist-step completed">
-        <div class="step-check">✓</div>
-        <div class="step-details">
-          <span class="step-num-label">Step 1: Market Shape</span>
-          <span class="step-desc-text">${step1Desc}</span>
-        </div>
-      </div>
-      <div class="checklist-step completed">
-        <div class="step-check">✓</div>
-        <div class="step-details">
-          <span class="step-num-label">Step 2: Key levels mapped</span>
-          <span class="step-desc-text">${step2Desc}</span>
-        </div>
-      </div>
-      <div class="checklist-step completed">
-        <div class="step-check">✓</div>
-        <div class="step-details">
-          <span class="step-num-label">Step 3: Range State check</span>
-          <span class="step-desc-text">${step3Desc}</span>
-        </div>
-      </div>
-      <div class="checklist-step completed">
-        <div class="step-check">✓</div>
-        <div class="step-details">
-          <span class="step-num-label">Step 4: Selected Strategy</span>
-          <span class="step-desc-text">${step4Desc}</span>
-        </div>
-      </div>
-      <div class="checklist-step ${sizeRec === 'SKIP' ? 'warning' : 'completed'}">
-        <div class="step-check">${sizeRec === 'SKIP' ? '⚠' : '✓'}</div>
-        <div class="step-details">
-          <span class="step-num-label">Step 5: Sizing & Conviction</span>
-          <span class="step-desc-text">${step5Desc}</span>
-        </div>
-      </div>
-    </div>
-  </div>`;
-}
-
-// ── Visual Thermometer Gauge Rendering ───────────
-function renderTradeSetup(setup, label, session, btcPrice) {
+// ── Trade setup block HTML (for one setup) ─────────
+function renderTradeSetup(setup, label, session) {
   const dir = setup.direction || 'LONG';
-  
-  // Collect all levels to scale the bounds
-  const prices = [setup.entry, setup.t1, setup.t2, setup.stop_loss];
-  if (setup.invalidation) prices.push(setup.invalidation);
-  
-  const maxPrice = Math.max(...prices);
-  const minPrice = Math.min(...prices);
-  const span = (maxPrice - minPrice) || 1;
-
-  const getPct = (p) => ((p - minPrice) / span) * 100;
-
-  const entryPct = getPct(setup.entry);
-  const stopPct = getPct(setup.stop_loss);
-  const t1Pct = getPct(setup.t1);
-  const t2Pct = getPct(setup.t2);
-  const invalidPct = setup.invalidation ? getPct(setup.invalidation) : null;
-
-  // Calculate Green/Red fills
-  let greenBottom, greenHeight, redBottom, redHeight;
-  if (dir === 'LONG') {
-    greenBottom = entryPct;
-    greenHeight = t2Pct - entryPct;
-    redBottom = stopPct;
-    redHeight = entryPct - stopPct;
-  } else {
-    greenBottom = t2Pct;
-    greenHeight = entryPct - t2Pct;
-    redBottom = entryPct;
-    redHeight = stopPct - entryPct;
-  }
-
-  // Live Price locator
-  let nowIndicator = '';
-  if (btcPrice && btcPrice >= minPrice && btcPrice <= maxPrice) {
-    const nowPct = getPct(btcPrice);
-    nowIndicator = `
-      <div class="vp-gauge-now-marker" style="bottom: ${nowPct}%">
-        <span class="now-pulse"></span>
-        <span class="now-label">NOW ($${Math.round(btcPrice).toLocaleString()})</span>
-      </div>`;
-  }
+  const t2Label = dir === 'SHORT' ? 'VAL' : 'VAH';
+  const rrClass1 = setup.rr_t1 != null ? `<span class="trade-rr">${setup.rr_t1}:1</span>` : '';
+  const rrClass2 = setup.rr_t2 != null ? `<span class="trade-rr">${setup.rr_t2}:1</span>` : '';
+  const isPending = setup.status === 'PENDING';
+  const dimClass = isPending ? ' style="opacity:0.5"' : '';
 
   return `
-  <div class="vp-trade-gauge-wrapper">
-    <div class="gauge-header">
-      <span class="gauge-title">${label}</span>
-      <span class="gauge-subtitle">${session || ''} Session</span>
+  <div class="vp-trade-setup"${dimClass}>
+    <div class="block-title">${label} — ${session || ''} Session</div>
+    <div class="vp-trade-row" title="Suggested entry price for the current strategy">
+      <span class="trade-label">Entry</span>
+      <span class="trade-value trade-entry">${fmt(setup.entry)}</span>
     </div>
-    
-    <div class="gauge-body">
-      <!-- Thermometer Bar -->
-      <div class="vp-gauge-track-col">
-        <!-- Target (Green) Fill -->
-        <div class="vp-gauge-fill vp-gauge-fill--green" style="bottom: ${greenBottom}%; height: ${greenHeight}%"></div>
-        <!-- Stop (Red) Fill -->
-        <div class="vp-gauge-fill vp-gauge-fill--red" style="bottom: ${redBottom}%; height: ${redHeight}%"></div>
-        
-        <!-- Key level nodes -->
-        <div class="vp-gauge-marker t2" style="bottom: ${t2Pct}%">
-          <span class="marker-dot dot-t2"></span>
-          <span class="marker-text"><strong>T2:</strong> ${fmt(setup.t2)} ${setup.rr_t2 != null ? `<span class="rr-badge">${setup.rr_t2}:1 R:R</span>` : ''}</span>
-        </div>
-        <div class="vp-gauge-marker t1" style="bottom: ${t1Pct}%">
-          <span class="marker-dot dot-t1"></span>
-          <span class="marker-text"><strong>T1 (POC):</strong> ${fmt(setup.t1)} ${setup.rr_t1 != null ? `<span class="rr-badge">${setup.rr_t1}:1 R:R</span>` : ''}</span>
-        </div>
-        <div class="vp-gauge-marker entry" style="bottom: ${entryPct}%">
-          <span class="marker-dot dot-entry"></span>
-          <span class="marker-text"><strong>Entry:</strong> ${fmt(setup.entry)}</span>
-        </div>
-        <div class="vp-gauge-marker stop" style="bottom: ${stopPct}%">
-          <span class="marker-dot dot-stop"></span>
-          <span class="marker-text"><strong>Stop:</strong> ${fmt(setup.stop_loss)}</span>
-        </div>
-        ${setup.invalidation ? `
-        <div class="vp-gauge-marker invalidation" style="bottom: ${invalidPct}%">
-          <span class="marker-dot dot-invalid"></span>
-          <span class="marker-text"><strong>Invalid:</strong> ${fmt(setup.invalidation)}</span>
-        </div>` : ''}
-        
-        ${nowIndicator}
-      </div>
+    <div class="vp-trade-row" title="First profit target — POC level (primary magnet)">
+      <span class="trade-label">T1 — POC</span>
+      <span class="trade-value trade-t1">
+        ${fmt(setup.t1)}
+        ${rrClass1}
+      </span>
     </div>
+    <div class="vp-trade-row" title="Second profit target">
+      <span class="trade-label">T2 — ${t2Label}</span>
+      <span class="trade-value trade-t2">
+        ${fmt(setup.t2)}
+        ${rrClass2}
+      </span>
+    </div>
+    <div class="vp-trade-row" title="Stop loss — exit trade if price reaches this level">
+      <span class="trade-label">Stop</span>
+      <span class="trade-value trade-stop">${fmt(setup.stop_loss)}</span>
+    </div>
+    ${setup.invalidation != null ? `
+    <div class="vp-trade-row" title="If price reaches this level, the trade thesis is invalid">
+      <span class="trade-label">Invalidation</span>
+      <span class="trade-value" style="color:#6b7280">${fmt(setup.invalidation)}</span>
+    </div>` : ''}
   </div>`;
 }
 
-// ── Human-readable verdict dashboard ──────────────
+// ── Bottom-line conclusion for beginners ──────────
 function renderVerdict(d, shape, state) {
   const price = d.btc_price || 0;
   const poc = d.poc;
@@ -317,38 +181,38 @@ function renderVerdict(d, shape, state) {
 
   const bullets = [];
 
-  // Range alignment
+  // Where is price?
   if (state === 'ACCEPTANCE') {
-    bullets.push(`Price is at <strong>${fmt(price)}</strong> — inside the normal range (stable sideways rotation)`);
+    bullets.push(`Price at <strong>${fmt(price)}</strong> — inside the Value Area (normal range, no breakout)`);
   } else if (state === 'REJECTION_UP') {
-    bullets.push(`Price is at <strong>${fmt(price)}</strong> — <span class="t-green">above the ceiling</span> (bullish breakout in progress)`);
+    bullets.push(`Price at <strong>${fmt(price)}</strong> — <span class="t-green">above VAH</span> (bullish breakout in progress)`);
   } else {
-    bullets.push(`Price is at <strong>${fmt(price)}</strong> — <span class="t-red">below the floor</span> (bearish breakdown in progress)`);
+    bullets.push(`Price at <strong>${fmt(price)}</strong> — <span class="t-red">below VAL</span> (bearish breakdown in progress)`);
   }
 
   // POC magnet
-  bullets.push(`Busiest price level is at <strong>${fmt(poc)}</strong> — acts as a magnet where price is drawn`);
+  bullets.push(`Primary magnet at <strong>${fmt(poc)}</strong> — price tends to get pulled toward the busiest level`);
 
-  // Touch count
+  // VAH/VAL touches
   const vahT = d.touch_count_vah || 0;
   const valT = d.touch_count_val || 0;
   if (vahT === 0 && valT === 0) {
-    bullets.push(`No ceiling or floor touches yet — price boundaries haven't been tested`);
+    bullets.push(`No VAH/VAL touches yet — the edges of fair value haven't been tested`);
   } else {
-    if (vahT > 0) bullets.push(`Ceiling (VAH) touched <strong>${vahT}×</strong> — resistance is active`);
-    if (valT > 0) bullets.push(`Floor (VAL) touched <strong>${valT}×</strong> — support is active`);
+    if (vahT > 0) bullets.push(`VAH touched <strong>${vahT}×</strong> — resistance is being tested`);
+    if (valT > 0) bullets.push(`VAL touched <strong>${valT}×</strong> — support is being tested`);
   }
 
-  // HVN
+  // HVN magnet zone
   if (hvn && hvn !== 'N/A') {
-    bullets.push(`High activity zone is at <strong>$${hvn.replace(/-/g, '–$')}</strong> — heavy trading, strong support/resistance`);
+    bullets.push(`HVN magnet zone at <strong>$${hvn.replace(/-/g, '–$')}</strong> — thick trading area, strong support/resistance`);
   }
 
   // Strategy summary
   const biasSummary = {
-    FADE: 'Trade the Range — buy support floor, sell resistance ceiling',
-    FOLLOW: 'Trade the Trend — ride breakout momentum',
-    WAIT: 'Wait for Setup — stand aside',
+    FADE: 'Fade the extremes — buy near VAL, sell near VAH',
+    FOLLOW: 'Follow the trend — buy pullbacks (uptrend) or sell bounces (downtrend)',
+    WAIT: 'Wait for a clearer signal before entering',
   };
   const dirSummary = {
     LONG: 'looking to buy',
@@ -357,51 +221,47 @@ function renderVerdict(d, shape, state) {
   };
   bullets.push(`Strategy: <strong>${biasSummary[bias] || bias}</strong>, ${dirSummary[dir] || dir}`);
 
-  // Risk Sizing
-  const sizeMapShort = {
-    SKIP: 'Skip Trade',
-    '50_PERCENT': 'Half Size (Low Conviction)',
-    STANDARD: 'Standard Size',
-    FULL: 'Full Position'
-  };
-  bullets.push(`Position sizing: <strong>${sizeMapShort[sizeRec] || sizeRec}</strong>`);
-
+  // Size / AMT note
+  if (sizeRec && sizeRec !== 'NORMAL') {
+    bullets.push(`Position sizing: <strong>${sizeRec.replace(/_/g, ' ')}</strong> — adjust risk accordingly`);
+  }
   if (amtLock) {
-    bullets.push(`<span class="t-orange">⚠ Auto-Trader Active</span> — automated bot executing orders, expect sudden swings`);
+    bullets.push(`<span class="t-orange">⚠ AMT bot is active</span> — automated trading may affect price action`);
   }
 
   return `<div class="vp-verdict">
-    <div class="verdict-title">📋 Summary Dashboard</div>
+    <div class="verdict-title">📋 Bottom Line</div>
     <ul class="verdict-list">
       ${bullets.map(b => `<li>${b}</li>`).join('\n      ')}
     </ul>
   </div>`;
 }
 
-// ── Plain English Legend ─────────────────────────
+// ── Pill legend (what each badge means) ───────────
 function renderPillLegend(direction, state, bias, prob, amtLock) {
+  // Only show on first render — toggle visibility
   return `<details class="vp-legend">
-    <summary class="legend-toggle">ℹ️ What do these labels mean?</summary>
+    <summary class="legend-toggle">ℹ️ What do these mean?</summary>
     <div class="legend-body">
       <div class="legend-item">
-        <span class="legend-key dir--short">TRADE BIAS</span>
-        <span class="legend-desc">Preferred direction (LONG = buy setups, SHORT = sell setups, DUAL = watch both).</span>
+        <span class="legend-key dir--short">SHORT</span>
+        <span class="legend-desc">Trade direction — the card suggests a <strong>sell</strong> setup. Opposite: LONG = buy.</span>
       </div>
       <div class="legend-item">
-        <span class="legend-key pill--acceptance">NORMAL RANGE</span>
-        <span class="legend-desc">Price is <strong>inside</strong> the Value Area (Ceiling/Floor) — stable sideways market.</span>
+        <span class="legend-key pill--acceptance">ACCEPTANCE</span>
+        <span class="legend-desc">Price is <strong>inside</strong> the Value Area — no breakout happening. Normal, sideways market.</span>
       </div>
       <div class="legend-item">
-        <span class="legend-key pill--fade">TRADE THE RANGE</span>
-        <span class="legend-desc">Strategy bias — buy near the Floor (VAL) and sell near the Ceiling (VAH), targeting the center (POC).</span>
+        <span class="legend-key pill--fade">FADE</span>
+        <span class="legend-desc">Strategy bias — <strong>fade the extremes</strong>. Buy near VAL (support), sell near VAH (resistance).</span>
       </div>
       <div class="legend-item">
-        <span class="legend-key pill--baseline">SIGNAL CONFIDENCE</span>
-        <span class="legend-desc">Conviction tier based on touches and indicators (Standard, High, Very High, Reinforced).</span>
+        <span class="legend-key pill--baseline">BASELINE</span>
+        <span class="legend-desc">Confidence tier — <strong>standard signal</strong>. The setup meets baseline criteria but isn't reinforced by extra factors.</span>
       </div>
       <div class="legend-item">
-        <span class="legend-key pill--lockout">BOT ACTIVE</span>
-        <span class="legend-desc">An automated tape-reading system is running. Expect high volatility; retail sizing is reduced.</span>
+        <span class="legend-key pill--lockout">AMT LOCKOUT</span>
+        <span class="legend-desc"><strong>AMT bot is running</strong> — an automated trading bot is active. Price may behave differently than usual.</span>
       </div>
     </div>
   </details>`;
@@ -416,121 +276,106 @@ function renderVPCard(raw, mountId = 'vp-card-mount') {
   const direction = d.direction || 'LONG';
   const setups = d.trade_setups || [];
   const isDual = direction === 'DUAL' && setups.length === 2;
+  const primary = getPrimarySetup(d);
 
   const lockoutPill = d.amt_lockout
-    ? `<span class="vp-pill pill--lockout" title="Automated trading bot is active — high risk">BOT ACTIVE</span>`
-    : `<span class="vp-pill pill--clear" title="Automated trading bot is inactive — normal market">BOT INACTIVE</span>`;
+    ? `<span class="vp-pill pill--lockout" title="Aggressive Market Tape bot active — trade with caution">AMT LOCKOUT</span>`
+    : `<span class="vp-pill pill--clear" title="AMT bot not active — normal trading">AMT CLEAR</span>`;
 
-  // Sizing recommendations
-  const sizeMap = {
-    SKIP: 'Skip Trade',
-    '50_PERCENT': 'Half Position Size (Low Conviction)',
-    STANDARD: 'Standard Position Size',
-    FULL: 'Full Conviction Position Size',
-  };
-
-  // Trade setups
+  // Trade block HTML
   let tradeBlock = '';
   if (isDual) {
     tradeBlock = `
-    <div class="vp-trade-container-flex">
-      ${renderTradeSetup(setups[0], '🔵 LONG Setup', d.session, d.btc_price)}
-      ${renderTradeSetup(setups[1], '🔴 SHORT Setup', d.session, d.btc_price)}
-    </div>`;
+  <div class="vp-trade-block">
+    ${renderTradeSetup(setups[0], '🔵 LONG Setup', d.session)}
+    ${renderTradeSetup(setups[1], '🔴 SHORT Setup', d.session)}
+  </div>`;
   } else if (setups.length > 0) {
     tradeBlock = `
-    <div class="vp-trade-container-flex">
-      ${renderTradeSetup(setups[0], `${direction} Setup`, d.session, d.btc_price)}
-    </div>`;
+  <div class="vp-trade-block">
+    ${renderTradeSetup(setups[0], `${direction} Setup`, d.session)}
+  </div>`;
   } else {
-    // Backward compat
-    const primary = getPrimarySetup(d);
+    // Backward compat — no trade_setups array
     tradeBlock = `
-    <div class="vp-trade-container-flex">
-      ${renderTradeSetup(primary, `${direction} Setup`, d.session, d.btc_price)}
-    </div>`;
+  <div class="vp-trade-block">
+    ${renderTradeSetup(primary, `${direction} Setup`, d.session)}
+  </div>`;
   }
 
   const html = `
 <div class="vp-card">
 
   <div class="vp-card___header">
-    <span class="vp-cardtitle">Volume Profile V3.0</span>
+    <span class="vp-cardtitle">Volume Profile</span>
     <span class="vp-card___updated">Updated ${fmtTime(d.last_updated)}</span>
   </div>
 
-  <div class="vp-card-grid">
-    <!-- Left Column: Vertical Chart -->
-    <div class="vp-card-col-chart">
-      <div id="vp-chart-container"></div>
+  <div class="vp-shape-badge ${sc.cls}" title="Market structure: ${sc.label} — ${sc.desc}">
+    <span class="shape-label">${sc.label}</span>
+    <span class="shape-desc">${sc.desc}</span>
+  </div>
+
+  <div class="vp-state-row">
+    ${directionBadge(direction)}
+    ${statePill(state)}
+    ${biasPill(d.strategy_bias)}
+    ${probPill(d.probability_tier)}
+    ${lockoutPill}
+  </div>
+  ${renderPillLegend(direction, state, d.strategy_bias, d.probability_tier, d.amt_lockout)}
+
+  <div class="vp-levels">
+    <div class="vp-level-item level-poc"
+         title="Point of Control: the busiest price. Acts as a magnet — price often returns here.">
+      <div class="level-label">POC</div>
+      <div class="level-value">${fmt(d.poc)}</div>
+      <div class="level-sub">Primary magnet</div>
     </div>
-
-    <!-- Right Column: Info & Strategy -->
-    <div class="vp-card-col-info">
-      <div class="vp-shape-badge ${sc.cls}" title="Market structure: ${sc.label} — ${sc.desc}">
-        <span class="shape-label">${sc.label}</span>
-        <span class="shape-desc">${sc.desc}</span>
-      </div>
-
-      <div class="vp-state-row">
-        ${directionBadge(direction)}
-        ${statePill(state)}
-        ${biasPill(d.strategy_bias)}
-        ${probPill(d.probability_tier)}
-        ${lockoutPill}
-      </div>
-      
-      ${renderPillLegend(direction, state, d.strategy_bias, d.probability_tier, d.amt_lockout)}
-
-      ${renderDecisionChecklist(d, shape, state)}
-
-      <div class="vp-levels">
-        <div class="vp-level-item level-poc" title="Point of Control: Busiest price level. Primary magnet.">
-          <div class="level-label">POC (Busiest Price)</div>
-          <div class="level-value">${fmt(d.poc)}</div>
-          <div class="level-sub">Primary magnet</div>
-        </div>
-        <div class="vp-level-item level-vah" title="Value Area High: Price Ceiling. Breakout boundary.">
-          <div class="level-label">VAH (Price Ceiling)</div>
-          <div class="level-value">${fmt(d.vah)}</div>
-          <div class="level-sub">Touches: ${d.touch_count_vah}</div>
-        </div>
-        <div class="vp-level-item level-val" title="Value Area Low: Price Floor. Support boundary.">
-          <div class="level-label">VAL (Price Floor)</div>
-          <div class="level-value">${fmt(d.val)}</div>
-          <div class="level-sub">Touches: ${d.touch_count_val}</div>
-        </div>
-        <div class="vp-level-item level-hvn" title="High Volume Node: Dense trading area. Pausing zone.">
-          <div class="level-label">HVN (High Activity)</div>
-          <div class="level-value">${d.hvn_range ? '$' + d.hvn_range.replace('-', '–$') : '—'}</div>
-          <div class="level-sub">Magnet zone</div>
-        </div>
-      </div>
-
-      ${renderVerdict(d, shape, state)}
-
-      ${tradeBlock}
-
-      <div class="vp-card-row">
-        <span class="trade-label">Risk Sizing Recommendation</span>
-        <span class="trade-value trade-size">
-          ${sizeMap[d.size_recommendation] || (d.size_recommendation || '—').replace('_', ' ')}
-        </span>
-      </div>
-
-      <div class="vp-links">
-        <a class="vp-link-btn" href="#amt-status-card">↗ AMT Status + VP×AMT Table</a>
-        <a class="vp-link-btn" href="#liquidity-card">↗ Liquidity — CVD/Absorption</a>
-      </div>
+    <div class="vp-level-item level-vah"
+         title="Value Area High: ceiling of fair value. Resistance and bullish breakout point.">
+      <div class="level-label">VAH</div>
+      <div class="level-value">${fmt(d.vah)}</div>
+      <div class="level-sub">Touches: ${d.touch_count_vah}</div>
+    </div>
+    <div class="vp-level-item level-val"
+         title="Value Area Low: floor of fair value. Support and bearish breakdown point.">
+      <div class="level-label">VAL</div>
+      <div class="level-value">${fmt(d.val)}</div>
+      <div class="level-sub">Touches: ${d.touch_count_val}</div>
+    </div>
+    <div class="vp-level-item level-hvn"
+         title="High Volume Node: thick trading zone. Strong support or resistance.">
+      <div class="level-label">HVN</div>
+      <div class="level-value">${d.hvn_range ? '$' + d.hvn_range.replace('-', '–$') : '—'}</div>
+      <div class="level-sub">Magnet zone</div>
     </div>
   </div>
+
+  ${renderVerdict(d, shape, state)}
+
+  ${tradeBlock}
+
+  <div class="vp-card-row" style="display:flex;gap:6px;margin-top:4px">
+    <span class="trade-label">Size</span>
+    <span class="trade-value trade-size">
+      ${(d.size_recommendation || '—').replace('_', ' ')}
+    </span>
+  </div>
+
+  <div class="vp-links">
+    <a class="vp-link-btn" href="#amt-status-card">↗ AMT Status + VP×AMT Table</a>
+    <a class="vp-link-btn" href="#liquidity-card">↗ Liquidity — CVD/Absorption</a>
+  </div>
+
+  <div id="vp-chart-container" class="vp-chart"></div>
 
 </div>`;
 
   const mount = document.getElementById(mountId);
   if (mount) mount.innerHTML = html;
 
-  // Render vertical chart inside the left column container
+  // Render chart if chart_data present
   if (raw.chart_data && raw.chart_data.bins) {
     renderVPChart(raw, 'vp-chart-container');
   }
@@ -550,40 +395,6 @@ async function loadVPCard(mountId = 'vp-card-mount') {
   }
 }
 
-// ── Compact/Expert Mode persistence logic ──────────
-function initExpertMode() {
-  const toggleBtn = document.getElementById('expert-toggle');
-  if (!toggleBtn) return;
-
-  const isExpert = localStorage.getItem('vp_expert_mode') === 'true';
-  
-  const updateUI = (active) => {
-    document.body.classList.toggle('expert-mode', active);
-    const textEl = toggleBtn.querySelector('.toggle-text');
-    const iconEl = toggleBtn.querySelector('.toggle-icon');
-    if (active) {
-      if (textEl) textEl.textContent = 'Switch to Beginner Mode';
-      if (iconEl) iconEl.textContent = '🎓';
-      toggleBtn.classList.add('active');
-    } else {
-      if (textEl) textEl.textContent = 'Switch to Expert Mode';
-      if (iconEl) iconEl.textContent = '👁️';
-      toggleBtn.classList.remove('active');
-    }
-  };
-
-  updateUI(isExpert);
-
-  toggleBtn.addEventListener('click', () => {
-    const active = !document.body.classList.contains('expert-mode');
-    localStorage.setItem('vp_expert_mode', active);
-    updateUI(active);
-  });
-}
-
-// Auto-run load and auto-refresh
+// ── Auto-refresh every 60s ────────────────────────
 loadVPCard();
 setInterval(() => loadVPCard(), 60_000);
-
-// Initialize compact toggle on DOM load
-initExpertMode();

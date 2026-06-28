@@ -1,4 +1,4 @@
-/* ── Volume Profile V3.0 Stylesheet ────────────────── */
+/* ── VP Card — mobile-first ──────────────────── */
 .vp-card {
   background: #111827;
   border: 1px solid #1f2937;
@@ -29,30 +29,6 @@
   color: #4b5563;
 }
 
-/* Two-column layout grid for desktop */
-.vp-card-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-@media (min-width: 768px) {
-  .vp-card-grid {
-    flex-direction: row;
-    align-items: stretch;
-  }
-  .vp-card-col-chart {
-    width: 260px;
-    flex-shrink: 0;
-  }
-  .vp-card-col-info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-}
-
 /* Shape badge */
 .vp-shape-badge {
   display: inline-flex;
@@ -60,14 +36,14 @@
   gap: 8px;
   padding: 6px 14px;
   border-radius: 8px;
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
   letter-spacing: 0.02em;
-  margin-bottom: 10px;
+  margin-bottom: 14px;
   width: 100%;
   box-sizing: border-box;
 }
-.vp-shape-badge .shape-label { font-size: 13px; font-weight: 600; }
+.vp-shape-badge .shape-label { font-size: 13px; font-weight: 500; }
 .vp-shape-badge .shape-desc  { font-size: 11px; opacity: 0.75; margin-left: auto; }
 
 .shape--D { background: #1e2d40; color: #60a5fa; }
@@ -79,12 +55,13 @@
 .vp-state-row {
   display: flex;
   gap: 8px;
-  margin-bottom: 4px;
-  flex-wrap: wrap;
+  margin-bottom: 14px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
 }
 
 .vp-pill {
-  font-size: 10px;
+  font-size: 11px;
   padding: 4px 10px;
   border-radius: 20px;
   font-weight: 600;
@@ -96,9 +73,8 @@
 .pill--fade    { background: #1e2d40; color: #60a5fa; }
 .pill--follow  { background: #14291f; color: #34d399; }
 .pill--wait    { background: #2a1f3d; color: #c084fc; }
-
 /* Direction badge */
-.vp-dir-badge { font-weight: 700; font-size: 10px; padding: 4px 10px; border-radius: 20px; }
+.vp-dir-badge { font-weight: 700; font-size: 11px; padding: 2px 10px; }
 .dir--long   { background: #0d2818; color: #34d399; }
 .dir--short  { background: #2d1414; color: #f87171; }
 .dir--dual   { background: #1f1a2e; color: #a78bfa; }
@@ -109,88 +85,36 @@
 .pill--reinforced { background: #2a1f3d; color: #c084fc; }
 .pill--baseline   { background: #1f2937; color: #9ca3af; }
 
-/* Live Decision Path Checklist */
-.live-checklist-card {
-  background: #161b22;
-  border: 1px solid #21262d;
-  border-radius: 8px;
-  padding: 12px;
-  margin-bottom: 8px;
-}
-.checklist-title {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #8b949e;
-  margin-bottom: 8px;
-  font-weight: 700;
-}
-.checklist-steps {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.checklist-step {
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  font-size: 12px;
-}
-.step-check {
-  font-size: 11px;
-  font-weight: 800;
-  color: #34d399;
-  width: 16px;
-  text-align: center;
-}
-.checklist-step.warning .step-check {
-  color: #fb923c;
-}
-.step-details {
-  display: flex;
-  flex-direction: column;
-}
-.step-num-label {
-  font-weight: 700;
-  color: #c9d1d9;
-  font-size: 11px;
-}
-.step-desc-text {
-  color: #8b949e;
-  font-size: 11px;
-  margin-top: 1px;
-}
-
 /* Levels grid */
 .vp-levels {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
-  margin-bottom: 10px;
+  margin-bottom: 14px;
 }
 
 .vp-level-item {
   background: #1f2937;
   border-radius: 8px;
-  padding: 8px 10px;
+  padding: 10px 12px;
 }
 
 .vp-level-item .level-label {
-  font-size: 9px;
+  font-size: 10px;
   color: #6b7280;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 2px;
+  letter-spacing: 0.08em;
+  margin-bottom: 3px;
 }
 
 .vp-level-item .level-value {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
   color: #f9fafb;
 }
 
 .vp-level-item .level-sub {
-  font-size: 9px;
+  font-size: 10px;
   color: #6b7280;
   margin-top: 2px;
 }
@@ -198,155 +122,49 @@
 .level-poc .level-value { color: #facc15; }
 .level-vah .level-value { color: #f87171; }
 .level-val .level-value { color: #34d399; }
-.level-hvn .level-value { color: #a78bfa; font-size: 12px; }
+.level-hvn .level-value { color: #a78bfa; font-size: 13px; }
 
-/* Visual trade setup gauges container */
-.vp-trade-container-flex {
-  display: flex;
-  gap: 12px;
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-.vp-trade-gauge-wrapper {
-  flex: 1;
+/* Trade setup */
+.vp-trade-block {
   background: #1a2235;
-  border: 1px solid #21293c;
+  border: 1px solid #1f2937;
   border-radius: 8px;
-  padding: 10px 12px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
+  padding: 12px;
+  margin-bottom: 14px;
 }
 
-.gauge-header {
+.vp-trade-block .block-title {
+  font-size: 10px;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
   margin-bottom: 10px;
 }
-.gauge-title {
-  font-size: 11px;
-  font-weight: 700;
-  color: #e5e7eb;
-}
-.gauge-subtitle {
-  font-size: 9px;
-  color: #4b5563;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
 
-.gauge-body {
-  flex: 1;
-  height: 180px;
-  position: relative;
-  margin: 10px 0 10px 10px;
-}
-
-.vp-gauge-track-col {
-  position: relative;
-  width: 8px;
-  height: 100%;
-  background: #2d3748;
-  border-radius: 4px;
-  margin: 0 auto 0 0;
-}
-
-.vp-gauge-fill {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  border-radius: 2px;
-  opacity: 0.25;
-}
-.vp-gauge-fill--green { background: #10b981; }
-.vp-gauge-fill--red { background: #ef4444; }
-
-.vp-gauge-marker {
-  position: absolute;
-  left: 18px;
-  transform: translateY(50%);
+.vp-trade-row {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  white-space: nowrap;
-}
-
-.marker-dot {
-  position: absolute;
-  left: -22px;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #9ca3af;
-  border: 1px solid #111827;
-}
-
-.dot-t2 { background: #34d399; }
-.dot-t1 { background: #10b981; }
-.dot-entry { background: #60a5fa; }
-.dot-stop { background: #f87171; }
-.dot-invalid { background: #6b7280; }
-
-.marker-text {
-  font-size: 10px;
-  color: #9ca3af;
-}
-.marker-text strong {
-  color: #f3f4f6;
-}
-
-.rr-badge {
-  font-size: 8px;
-  background: rgba(255, 255, 255, 0.06);
-  padding: 1px 3px;
-  border-radius: 2px;
-  color: #6b7280;
-  margin-left: 4px;
-}
-
-.vp-gauge-now-marker {
-  position: absolute;
-  left: -4px;
-  right: -200px;
-  height: 0;
-  border-top: 1px dashed #60a5fa;
-  display: flex;
-  align-items: center;
-  pointer-events: none;
-}
-.now-pulse {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #60a5fa;
-  box-shadow: 0 0 6px #60a5fa;
-  flex-shrink: 0;
-}
-.now-label {
-  font-size: 8px;
-  color: #60a5fa;
-  font-weight: 700;
-  font-family: monospace;
-  margin-left: 8px;
-  background: rgba(13, 17, 23, 0.9);
-  padding: 1px 3px;
-  border-radius: 2px;
-}
-
-.vp-card-row {
-  display: flex;
-  gap: 8px;
-  font-size: 11px;
   padding: 4px 0;
-  margin-top: 4px;
+  border-bottom: 1px solid #1f2937;
+  font-size: 12px;
 }
-.vp-card-row .trade-label { color: #9ca3af; }
-.vp-card-row .trade-value { font-weight: 600; color: #fb923c; }
+.vp-trade-row:last-child { border-bottom: none; }
+.vp-trade-row .trade-label { color: #9ca3af; }
+.vp-trade-row .trade-value { font-weight: 600; color: #f9fafb; }
+.vp-trade-row .trade-rr { font-size: 10px; color: #6b7280; margin-left: 6px; }
+
+.trade-entry { color: #60a5fa !important; }
+.trade-t1    { color: #34d399 !important; }
+.trade-t2    { color: #34d399 !important; }
+.trade-stop  { color: #f87171 !important; }
+.trade-size  { color: #fb923c !important; }
 
 /* Links */
 .vp-links {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-  margin-top: 10px;
 }
 
 .vp-link-btn {
@@ -357,8 +175,8 @@
   color: #9ca3af;
   border: 1px solid #374151;
   border-radius: 8px;
-  padding: 6px 8px;
-  font-size: 10px;
+  padding: 8px 10px;
+  font-size: 11px;
   cursor: pointer;
   text-decoration: none;
   transition: background 0.15s, color 0.15s;
@@ -370,15 +188,15 @@
   background: #1a2235;
   border: 1px solid #1f2937;
   border-radius: 8px;
-  padding: 10px 12px;
-  margin-bottom: 10px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
 }
 .verdict-title {
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: #a78bfa;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   font-weight: 700;
 }
 .verdict-list {
@@ -389,9 +207,9 @@
 .verdict-list li {
   font-size: 11px;
   color: #d1d5db;
-  padding: 3px 0;
+  padding: 4px 0;
   border-bottom: 1px solid rgba(255,255,255,0.04);
-  line-height: 1.45;
+  line-height: 1.5;
 }
 .verdict-list li:last-child { border-bottom: none; }
 .t-green { color: #34d399; }
@@ -400,249 +218,180 @@
 
 /* Pill legend */
 .vp-legend {
-  margin-bottom: 10px;
-  font-size: 10px;
+  margin-bottom: 12px;
+  font-size: 11px;
 }
 .legend-toggle {
   color: #6b7280;
   cursor: pointer;
   user-select: none;
-  font-size: 9px;
+  font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   padding: 4px 0;
 }
 .legend-toggle:hover { color: #9ca3af; }
 .legend-body {
-  background: #161b22;
-  border: 1px solid #21262d;
+  background: #1a2235;
+  border: 1px solid #1f2937;
   border-radius: 8px;
-  padding: 8px 10px;
-  margin-top: 4px;
+  padding: 10px 12px;
+  margin-top: 6px;
 }
 .legend-item {
   display: flex;
   align-items: flex-start;
-  gap: 8px;
-  padding: 4px 0;
+  gap: 10px;
+  padding: 5px 0;
   border-bottom: 1px solid rgba(255,255,255,0.04);
 }
 .legend-item:last-child { border-bottom: none; }
 .legend-key {
-  font-size: 9px;
-  padding: 2px 6px;
+  font-size: 10px;
+  padding: 2px 8px;
   border-radius: 12px;
   font-weight: 600;
   white-space: nowrap;
   flex-shrink: 0;
 }
 .legend-desc {
-  color: #8b949e;
-  line-height: 1.4;
+  color: #9ca3af;
+  line-height: 1.45;
 }
 
-/* Volume Profile vertical chart styling */
-.vp-chart-container-vertical {
-  position: relative;
+/* Desktop scale-up */
+@media (min-width: 640px) {
+  .vp-card { padding: 20px; }
+  .vp-levels { grid-template-columns: 1fr 1fr 1fr 1fr; }
+  .vp-shape-badge { font-size: 26px; }
+}
+
+/* Volume Profile chart container */
+.vp-chart {
   width: 100%;
-  height: 420px;
+  max-width: 100%;
+  border-radius: 12px;
+  margin-top: 16px;
   background: #111827;
   border: 1px solid #1f2937;
-  border-radius: 8px;
-  padding: 12px 14px;
+  padding: 12px 14px 14px 14px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.vp-chart-container-horizontal {
+  position: relative;
+  width: 100%;
   box-sizing: border-box;
 }
 
-.vp-chart-vertical-bars {
+/* Horizontal chart layout */
+.vp-chart-horizontal {
+  display: flex;
+  align-items: flex-end;
+  height: 110px;
+  gap: 2px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   position: relative;
   width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  box-sizing: border-box;
 }
 
-.vp-bar-row {
-  display: flex;
-  align-items: center;
-  height: calc(100% / 35);
+/* Single vertical column bar */
+.vp-bar-horizontal {
+  flex: 1;
+  min-width: 2px;
+  border-radius: 2px 2px 0 0;
+  transition: height 0.3s ease;
+}
+
+/* Colors matching requirement 4: POC=yellow, VAH=red, VAL=green, HVN=purple, LVN=dim */
+.vp-bar-horizontal.poc {
+  background: #facc15;
+  box-shadow: 0 0 8px rgba(250, 204, 21, 0.5);
+}
+.vp-bar-horizontal.vah {
+  background: #f87171;
+}
+.vp-bar-horizontal.val {
+  background: #34d399;
+}
+.vp-bar-horizontal.hvn {
+  background: #a78bfa;
+}
+.vp-bar-horizontal.lvn {
+  background: rgba(55, 65, 81, 0.3);
+}
+.vp-bar-horizontal.normal {
+  background: rgba(75, 85, 99, 0.4);
+}
+
+/* NOW Marker & Track */
+.vp-now-track-horizontal {
+  position: relative;
+  height: 16px;
+  margin-bottom: 6px;
+  width: 100%;
+}
+.vp-now-marker {
+  position: absolute;
+  transform: translateX(-50%);
+  font-family: monospace;
+  font-size: 9px;
+  color: #60a5fa;
+  white-space: nowrap;
+  font-weight: bold;
+}
+
+/* Labels under the chart */
+.vp-labels-row-horizontal {
+  position: relative;
+  margin-top: 4px;
   width: 100%;
 }
 
-.vp-bar-fill {
-  height: 80%;
-  border-radius: 0 2px 2px 0;
-  transition: width 0.3s ease;
-}
-
-.vp-bar-fill.poc {
-  background: #facc15;
-  box-shadow: 0 0 6px rgba(250, 204, 21, 0.4);
-}
-.vp-bar-fill.vah { background: #f87171; }
-.vp-bar-fill.val { background: #34d399; }
-.vp-bar-fill.hvn { background: #a78bfa; }
-.vp-bar-fill.normal { background: rgba(75, 85, 99, 0.4); }
-.vp-bar-fill.lvn { background: rgba(55, 65, 81, 0.25); }
-
-/* Horizontal dashed lines */
-.vp-horizontal-threshold {
+.vp-x-label {
   position: absolute;
-  left: 0;
-  right: 0;
-  border-top: 1px dashed;
-  pointer-events: none;
-  z-index: 2;
-}
-.vp-horizontal-threshold.vah-line { border-top-color: #f87171; }
-.vp-horizontal-threshold.poc-line { border-top-color: #facc15; }
-.vp-horizontal-threshold.val-line { border-top-color: #34d399; }
-
-/* Labels inside the vertical chart */
-.vp-level-chart-label {
-  position: absolute;
-  right: 10px;
-  transform: translateY(-50%);
+  transform: translateX(-50%);
+  text-align: center;
   font-family: monospace;
-  font-size: 8px;
+  font-size: 10px;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+/* Labels colors */
+.vp-x-label.poc { color: #facc15; }
+.vp-x-label.vah { color: #f87171; }
+.vp-x-label.val { color: #34d399; }
+
+.vp-label-title {
   font-weight: 800;
+  font-size: 9px;
   padding: 1px 4px;
   border-radius: 3px;
-  background: rgba(17, 24, 39, 0.95);
-  pointer-events: none;
 }
-.vp-level-chart-label.vah { color: #f87171; border: 1px solid rgba(248, 113, 113, 0.3); }
-.vp-level-chart-label.poc { color: #facc15; border: 1px solid rgba(250, 204, 21, 0.3); }
-.vp-level-chart-label.val { color: #34d399; border: 1px solid rgba(52, 211, 153, 0.3); }
+.vp-x-label.poc .vp-label-title { background: rgba(250, 204, 21, 0.15); }
+.vp-x-label.vah .vp-label-title { background: rgba(248, 113, 113, 0.15); }
+.vp-x-label.val .vp-label-title { background: rgba(52, 211, 153, 0.15); }
 
-/* Price NOW tracker line and label */
-.vp-price-tracker-line {
+/* Vertical dashed lines extending up through chart */
+.vp-line-dashed {
   position: absolute;
-  left: 0;
-  right: 0;
-  border-top: 2px solid #60a5fa;
-  box-shadow: 0 0 6px rgba(96, 165, 250, 0.6);
+  bottom: 30px; /* offset to start above the label text */
+  left: 50%;
+  border-left: 1px dashed;
   pointer-events: none;
-  z-index: 3;
+  opacity: 0.35;
 }
-.vp-price-tracker-label {
-  position: absolute;
-  left: 10px;
-  transform: translateY(-50%);
-  background: #60a5fa;
-  color: #0d1117;
-  font-size: 8px;
-  font-weight: 800;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-family: monospace;
-}
+.val-line { border-left-color: #34d399; }
+.poc-line { border-left-color: #facc15; }
+.vah-line { border-left-color: #f87171; }
 
 .vp-chart-info-label {
   text-align: center;
-  margin-top: 8px;
-  font-size: 9px;
+  margin-top: 10px;
+  font-size: 10px;
   color: #6b7280;
   font-family: monospace;
-}
-
-/* Page styles & header */
-.dashboard-header {
-  max-width: 1024px;
-  margin: 16px auto 20px;
-  padding: 0 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.dashboard-header h1 {
-  font-size: 20px;
-  font-weight: 800;
-  margin: 0;
-  color: #f9fafb;
-}
-.dashboard-header .subtitle {
-  font-size: 11px;
-  color: #9ca3af;
-  margin: 2px 0 0;
-}
-.toggle-btn {
-  background: #1f2937;
-  border: 1px solid #374151;
-  color: #e5e7eb;
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 10px;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.2s ease;
-}
-.toggle-btn:hover {
-  background: #374151;
-  border-color: #4b5563;
-  color: #ffffff;
-}
-.toggle-btn.active {
-  background: #0d2818;
-  border-color: #059669;
-  color: #34d399;
-}
-
-/* Compact mode display rules */
-body.expert-mode .vp-guide {
-  display: none;
-}
-body.expert-mode .live-checklist-card {
-  display: none;
-}
-
-/* Responsive grid widths */
-#vp-card-mount {
-  max-width: 1024px;
-  margin: 0 auto 32px;
-  padding: 0 16px;
-  box-sizing: border-box;
-}
-
-/* Responsive side-by-side trade setup block */
-@media (max-width: 580px) {
-  .vp-trade-container-flex {
-    flex-direction: column;
-  }
-}
-
-/* Skeleton loader layout adjustments */
-.vp-card-grid-skeleton {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-.skel-vertical-chart {
-  width: 100%;
-  height: 420px;
-  background: #1f2937;
-  border-radius: 8px;
-  animation: skel-pulse 1.5s ease-in-out infinite;
-}
-@media (min-width: 768px) {
-  .vp-card-grid-skeleton {
-    flex-direction: row;
-  }
-  .skel-chart-col {
-    width: 260px;
-    flex-shrink: 0;
-  }
-  .skel-info-col {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-}
-
-@media (min-width: 640px) {
-  .vp-levels { grid-template-columns: 1fr 1fr 1fr 1fr; }
 }
