@@ -11,7 +11,7 @@
     "probability_tier": "BASELINE",
     "acceptance_rejection_state": "REJECTION_DOWN",
     "rejection_direction": null,
-    "consecutive_closes_outside_va": 1,
+    "consecutive_closes_outside_va": 2,
     "confirmation_status": "PENDING",
     "active_pattern": "POC_MAGNET",
     "strategy_bias": "FOLLOW",
@@ -40,7 +40,7 @@
     ],
     "btc_price": 59176,
     "session": "LONDON",
-    "last_updated": "2026-06-29T02:19:09.052596+00:00"
+    "last_updated": "2026-06-29T02:21:00.569672+00:00"
   },
   "chart_data": {
     "bin_size": 1,
