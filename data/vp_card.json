@@ -1,350 +1,350 @@
 {
   "vp_card": {
-    "shape": "D",
+    "shape": "b",
     "direction": "SHORT",
-    "poc": 59214,
-    "vah": 59343,
-    "val": 59193,
-    "hvn_range": "59201-59291",
+    "poc": 58500,
+    "vah": 58660,
+    "val": 58481,
+    "hvn_range": "58488-58596",
     "touch_count_val": 0,
     "touch_count_vah": 0,
     "probability_tier": "BASELINE",
-    "acceptance_rejection_state": "ACCEPTANCE",
+    "acceptance_rejection_state": "REJECTION_DOWN",
     "rejection_direction": null,
-    "consecutive_closes_outside_va": 0,
+    "consecutive_closes_outside_va": 1,
     "confirmation_status": "PENDING",
     "active_pattern": "POC_MAGNET",
-    "strategy_bias": "FADE",
+    "strategy_bias": "FOLLOW",
     "amt_lockout": true,
     "amt_verdict": "NO_TRADE",
     "adx": 0,
-    "entry_level": 59345,
-    "t1": 59214,
-    "t2": 59193,
-    "stop_loss": 59365,
-    "invalidation": 59380,
-    "rr_t1": 6.39,
-    "rr_t2": 7.41,
+    "entry_level": 58662,
+    "t1": 58500,
+    "t2": 58481,
+    "stop_loss": 58695,
+    "invalidation": 58731,
+    "rr_t1": 4.79,
+    "rr_t2": 5.36,
     "size_recommendation": "SKIP",
     "trade_setups": [
       {
         "direction": "SHORT",
-        "entry": 59345,
-        "t1": 59214,
-        "t2": 59193,
-        "stop_loss": 59365,
-        "invalidation": 59380,
-        "rr_t1": 6.39,
-        "rr_t2": 7.41
+        "entry": 58662,
+        "t1": 58500,
+        "t2": 58481,
+        "stop_loss": 58695,
+        "invalidation": 58731,
+        "rr_t1": 4.79,
+        "rr_t2": 5.36
       }
     ],
-    "btc_price": 59331,
+    "btc_price": 58465,
     "session": "LONDON",
-    "last_updated": "2026-06-30T10:45:55.057885+00:00"
+    "last_updated": "2026-06-30T13:06:21.320528+00:00"
   },
   "chart_data": {
     "bin_size": 1,
-    "max_volume": 14.5,
+    "max_volume": 95.52,
     "bins": [
       {
-        "price": 59430,
-        "volume": 2.92,
-        "type": "normal"
-      },
-      {
-        "price": 59428,
-        "volume": 1.23,
+        "price": 58800,
+        "volume": 3.65,
         "type": "lvn"
       },
       {
-        "price": 59426,
-        "volume": 2.09,
-        "type": "normal"
-      },
-      {
-        "price": 59418,
-        "volume": 1.4,
+        "price": 58791,
+        "volume": 2.01,
         "type": "lvn"
       },
       {
-        "price": 59417,
-        "volume": 1.46,
-        "type": "normal"
-      },
-      {
-        "price": 59410,
-        "volume": 1.34,
+        "price": 58760,
+        "volume": 2.54,
         "type": "lvn"
       },
       {
-        "price": 59400,
-        "volume": 1.42,
+        "price": 58750,
+        "volume": 7.28,
         "type": "lvn"
       },
       {
-        "price": 59386,
-        "volume": 1.51,
-        "type": "normal"
-      },
-      {
-        "price": 59366,
-        "volume": 1.58,
-        "type": "normal"
-      },
-      {
-        "price": 59358,
-        "volume": 1.25,
+        "price": 58740,
+        "volume": 4.28,
         "type": "lvn"
       },
       {
-        "price": 59345,
-        "volume": 2.22,
-        "type": "vah"
-      },
-      {
-        "price": 59343,
-        "volume": 1.83,
-        "type": "vah"
-      },
-      {
-        "price": 59330,
-        "volume": 3.58,
-        "type": "normal"
-      },
-      {
-        "price": 59308,
-        "volume": 1.98,
-        "type": "normal"
-      },
-      {
-        "price": 59300,
-        "volume": 1.89,
-        "type": "normal"
-      },
-      {
-        "price": 59288,
-        "volume": 1.26,
+        "price": 58730,
+        "volume": 2.25,
         "type": "lvn"
       },
       {
-        "price": 59278,
-        "volume": 1.69,
-        "type": "normal"
-      },
-      {
-        "price": 59270,
-        "volume": 1.57,
-        "type": "normal"
-      },
-      {
-        "price": 59264,
-        "volume": 1.31,
-        "type": "lvn"
-      },
-      {
-        "price": 59259,
-        "volume": 1.39,
-        "type": "lvn"
-      },
-      {
-        "price": 59258,
-        "volume": 3.18,
-        "type": "normal"
-      },
-      {
-        "price": 59256,
-        "volume": 3.1,
-        "type": "normal"
-      },
-      {
-        "price": 59252,
-        "volume": 1.39,
-        "type": "lvn"
-      },
-      {
-        "price": 59250,
-        "volume": 5.2,
-        "type": "hvn"
-      },
-      {
-        "price": 59249,
-        "volume": 1.38,
-        "type": "lvn"
-      },
-      {
-        "price": 59248,
-        "volume": 1.27,
-        "type": "lvn"
-      },
-      {
-        "price": 59246,
-        "volume": 3.88,
-        "type": "normal"
-      },
-      {
-        "price": 59244,
-        "volume": 2.92,
-        "type": "normal"
-      },
-      {
-        "price": 59242,
+        "price": 58717,
         "volume": 2.76,
+        "type": "lvn"
+      },
+      {
+        "price": 58702,
+        "volume": 2.56,
+        "type": "lvn"
+      },
+      {
+        "price": 58700,
+        "volume": 13.51,
         "type": "normal"
       },
       {
-        "price": 59240,
-        "volume": 1.41,
+        "price": 58690,
+        "volume": 5.71,
         "type": "lvn"
       },
       {
-        "price": 59226,
-        "volume": 1.38,
+        "price": 58688,
+        "volume": 5.08,
         "type": "lvn"
       },
       {
-        "price": 59224,
-        "volume": 10.43,
-        "type": "hvn"
+        "price": 58685,
+        "volume": 4.45,
+        "type": "lvn"
       },
       {
-        "price": 59222,
+        "price": 58682,
+        "volume": 7.12,
+        "type": "lvn"
+      },
+      {
+        "price": 58681,
+        "volume": 4.09,
+        "type": "lvn"
+      },
+      {
+        "price": 58680,
+        "volume": 5.98,
+        "type": "lvn"
+      },
+      {
+        "price": 58675,
+        "volume": 3.22,
+        "type": "lvn"
+      },
+      {
+        "price": 58668,
         "volume": 2.58,
-        "type": "normal"
-      },
-      {
-        "price": 59220,
-        "volume": 2.91,
-        "type": "normal"
-      },
-      {
-        "price": 59216,
-        "volume": 1.36,
         "type": "lvn"
       },
       {
-        "price": 59214,
-        "volume": 14.5,
+        "price": 58667,
+        "volume": 4.4,
+        "type": "lvn"
+      },
+      {
+        "price": 58666,
+        "volume": 11.85,
+        "type": "normal"
+      },
+      {
+        "price": 58662,
+        "volume": 15.63,
+        "type": "vah"
+      },
+      {
+        "price": 58660,
+        "volume": 2.32,
+        "type": "vah"
+      },
+      {
+        "price": 58659,
+        "volume": 5.11,
+        "type": "vah"
+      },
+      {
+        "price": 58658,
+        "volume": 4.09,
+        "type": "vah"
+      },
+      {
+        "price": 58656,
+        "volume": 4.38,
+        "type": "lvn"
+      },
+      {
+        "price": 58655,
+        "volume": 2.07,
+        "type": "lvn"
+      },
+      {
+        "price": 58654,
+        "volume": 1.96,
+        "type": "lvn"
+      },
+      {
+        "price": 58650,
+        "volume": 8.41,
+        "type": "lvn"
+      },
+      {
+        "price": 58647,
+        "volume": 3.55,
+        "type": "lvn"
+      },
+      {
+        "price": 58646,
+        "volume": 4.52,
+        "type": "lvn"
+      },
+      {
+        "price": 58642,
+        "volume": 2.36,
+        "type": "lvn"
+      },
+      {
+        "price": 58638,
+        "volume": 4.6,
+        "type": "lvn"
+      },
+      {
+        "price": 58637,
+        "volume": 6.55,
+        "type": "lvn"
+      },
+      {
+        "price": 58634,
+        "volume": 2.83,
+        "type": "lvn"
+      },
+      {
+        "price": 58632,
+        "volume": 2.47,
+        "type": "lvn"
+      },
+      {
+        "price": 58629,
+        "volume": 1.99,
+        "type": "lvn"
+      },
+      {
+        "price": 58626,
+        "volume": 8.38,
+        "type": "lvn"
+      },
+      {
+        "price": 58623,
+        "volume": 2.25,
+        "type": "lvn"
+      },
+      {
+        "price": 58620,
+        "volume": 2.27,
+        "type": "lvn"
+      },
+      {
+        "price": 58607,
+        "volume": 3.13,
+        "type": "lvn"
+      },
+      {
+        "price": 58603,
+        "volume": 4.75,
+        "type": "lvn"
+      },
+      {
+        "price": 58600,
+        "volume": 6.49,
+        "type": "lvn"
+      },
+      {
+        "price": 58588,
+        "volume": 4.48,
+        "type": "lvn"
+      },
+      {
+        "price": 58578,
+        "volume": 3.71,
+        "type": "lvn"
+      },
+      {
+        "price": 58553,
+        "volume": 2.29,
+        "type": "lvn"
+      },
+      {
+        "price": 58550,
+        "volume": 4.77,
+        "type": "lvn"
+      },
+      {
+        "price": 58548,
+        "volume": 2.77,
+        "type": "lvn"
+      },
+      {
+        "price": 58547,
+        "volume": 4.21,
+        "type": "lvn"
+      },
+      {
+        "price": 58545,
+        "volume": 5.32,
+        "type": "lvn"
+      },
+      {
+        "price": 58542,
+        "volume": 2.37,
+        "type": "lvn"
+      },
+      {
+        "price": 58538,
+        "volume": 2.65,
+        "type": "lvn"
+      },
+      {
+        "price": 58537,
+        "volume": 4.13,
+        "type": "lvn"
+      },
+      {
+        "price": 58525,
+        "volume": 2.82,
+        "type": "lvn"
+      },
+      {
+        "price": 58501,
+        "volume": 2.51,
         "type": "poc"
       },
       {
-        "price": 59212,
-        "volume": 12.82,
-        "type": "hvn"
+        "price": 58500,
+        "volume": 95.52,
+        "type": "poc"
       },
       {
-        "price": 59210,
-        "volume": 6.87,
-        "type": "hvn"
+        "price": 58496,
+        "volume": 3.65,
+        "type": "lvn"
       },
       {
-        "price": 59208,
-        "volume": 1.5,
-        "type": "normal"
+        "price": 58493,
+        "volume": 6.0,
+        "type": "lvn"
       },
       {
-        "price": 59204,
-        "volume": 1.71,
-        "type": "normal"
+        "price": 58490,
+        "volume": 7.19,
+        "type": "lvn"
       },
       {
-        "price": 59200,
-        "volume": 4.42,
-        "type": "hvn"
+        "price": 58489,
+        "volume": 4.31,
+        "type": "lvn"
       },
       {
-        "price": 59196,
-        "volume": 2.41,
-        "type": "normal"
+        "price": 58487,
+        "volume": 4.34,
+        "type": "lvn"
       },
       {
-        "price": 59194,
-        "volume": 1.86,
+        "price": 58481,
+        "volume": 12.43,
         "type": "val"
-      },
-      {
-        "price": 59193,
-        "volume": 2.81,
-        "type": "val"
-      },
-      {
-        "price": 59192,
-        "volume": 1.23,
-        "type": "val"
-      },
-      {
-        "price": 59190,
-        "volume": 2.02,
-        "type": "normal"
-      },
-      {
-        "price": 59182,
-        "volume": 2.85,
-        "type": "normal"
-      },
-      {
-        "price": 59180,
-        "volume": 3.07,
-        "type": "normal"
-      },
-      {
-        "price": 59178,
-        "volume": 1.21,
-        "type": "lvn"
-      },
-      {
-        "price": 59176,
-        "volume": 2.35,
-        "type": "normal"
-      },
-      {
-        "price": 59172,
-        "volume": 2.52,
-        "type": "normal"
-      },
-      {
-        "price": 59162,
-        "volume": 1.21,
-        "type": "lvn"
-      },
-      {
-        "price": 59148,
-        "volume": 1.83,
-        "type": "normal"
-      },
-      {
-        "price": 59146,
-        "volume": 1.57,
-        "type": "normal"
-      },
-      {
-        "price": 59138,
-        "volume": 1.28,
-        "type": "lvn"
-      },
-      {
-        "price": 59134,
-        "volume": 1.38,
-        "type": "lvn"
-      },
-      {
-        "price": 59124,
-        "volume": 1.37,
-        "type": "lvn"
-      },
-      {
-        "price": 59122,
-        "volume": 1.65,
-        "type": "normal"
-      },
-      {
-        "price": 59118,
-        "volume": 1.35,
-        "type": "lvn"
-      },
-      {
-        "price": 59100,
-        "volume": 1.6,
-        "type": "normal"
       }
     ]
   }
