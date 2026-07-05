@@ -2,248 +2,178 @@
   "vp_card": {
     "shape": "P",
     "direction": "LONG",
-    "poc": 62920,
-    "vah": 62924,
-    "val": 62898,
-    "hvn_range": "62906-62922",
+    "poc": 62622,
+    "vah": 62633,
+    "val": 62619,
+    "hvn_range": "62620-62628",
     "touch_count_val": 0,
     "touch_count_vah": 0,
     "probability_tier": "BASELINE",
-    "acceptance_rejection_state": "REJECTION_UP",
+    "acceptance_rejection_state": "ACCEPTANCE",
     "rejection_direction": null,
-    "consecutive_closes_outside_va": 1,
+    "consecutive_closes_outside_va": 0,
     "confirmation_status": "PENDING",
     "active_pattern": "POC_MAGNET",
-    "strategy_bias": "FOLLOW",
+    "strategy_bias": "FADE",
     "amt_lockout": true,
     "amt_verdict": "NO_TRADE",
     "adx": 0,
-    "entry_level": 62896,
-    "t1": 62920,
-    "t2": 62950,
-    "stop_loss": 62894,
-    "invalidation": 62891,
-    "rr_t1": 12.63,
-    "rr_t2": 28.42,
+    "entry_level": 62617,
+    "t1": 62622,
+    "t2": 62647,
+    "stop_loss": 62616,
+    "invalidation": 62615,
+    "rr_t1": 50.0,
+    "rr_t2": 300.0,
     "size_recommendation": "SKIP",
     "trade_setups": [
       {
         "direction": "LONG",
-        "entry": 62896,
-        "t1": 62920,
-        "t2": 62950,
-        "stop_loss": 62894,
-        "invalidation": 62891,
-        "rr_t1": 12.63,
-        "rr_t2": 28.42
+        "entry": 62617,
+        "t1": 62622,
+        "t2": 62647,
+        "stop_loss": 62616,
+        "invalidation": 62615,
+        "rr_t1": 50.0,
+        "rr_t2": 300.0
       }
     ],
-    "btc_price": 62940,
+    "btc_price": 62622,
     "session": "LONDON",
-    "last_updated": "2026-07-05T15:17:46.242998+00:00"
+    "last_updated": "2026-07-05T16:47:46.015610+00:00"
   },
   "chart_data": {
     "bin_size": 1,
-    "max_volume": 1.11,
+    "max_volume": 3.98,
     "bins": [
       {
-        "price": 62940,
-        "volume": 0.29,
+        "price": 62644,
+        "volume": 0.03,
+        "type": "lvn"
+      },
+      {
+        "price": 62643,
+        "volume": 0.0,
+        "type": "lvn"
+      },
+      {
+        "price": 62642,
+        "volume": 0.13,
+        "type": "lvn"
+      },
+      {
+        "price": 62641,
+        "volume": 0.0,
+        "type": "lvn"
+      },
+      {
+        "price": 62640,
+        "volume": 1.23,
         "type": "normal"
       },
       {
-        "price": 62939,
-        "volume": 0.0,
+        "price": 62639,
+        "volume": 0.11,
         "type": "lvn"
       },
       {
-        "price": 62938,
-        "volume": 0.03,
+        "price": 62638,
+        "volume": 0.25,
         "type": "lvn"
       },
       {
-        "price": 62937,
-        "volume": 0.0,
+        "price": 62637,
+        "volume": 0.35,
         "type": "lvn"
       },
       {
-        "price": 62936,
-        "volume": 0.06,
-        "type": "lvn"
-      },
-      {
-        "price": 62935,
-        "volume": 0.0,
-        "type": "lvn"
-      },
-      {
-        "price": 62934,
-        "volume": 0.03,
-        "type": "lvn"
-      },
-      {
-        "price": 62932,
-        "volume": 0.04,
-        "type": "lvn"
-      },
-      {
-        "price": 62931,
-        "volume": 0.01,
-        "type": "lvn"
-      },
-      {
-        "price": 62930,
-        "volume": 0.04,
-        "type": "lvn"
-      },
-      {
-        "price": 62929,
-        "volume": 0.04,
-        "type": "lvn"
-      },
-      {
-        "price": 62928,
-        "volume": 0.03,
-        "type": "lvn"
-      },
-      {
-        "price": 62926,
-        "volume": 0.15,
-        "type": "vah"
-      },
-      {
-        "price": 62925,
-        "volume": 0.0,
-        "type": "vah"
-      },
-      {
-        "price": 62924,
-        "volume": 0.03,
-        "type": "vah"
-      },
-      {
-        "price": 62922,
-        "volume": 0.05,
-        "type": "vah"
-      },
-      {
-        "price": 62921,
-        "volume": 0.01,
-        "type": "poc"
-      },
-      {
-        "price": 62920,
-        "volume": 1.11,
-        "type": "poc"
-      },
-      {
-        "price": 62919,
-        "volume": 0.0,
-        "type": "poc"
-      },
-      {
-        "price": 62918,
-        "volume": 0.2,
+        "price": 62636,
+        "volume": 3.05,
         "type": "normal"
       },
       {
-        "price": 62917,
+        "price": 62635,
         "volume": 0.01,
-        "type": "lvn"
+        "type": "vah"
       },
       {
-        "price": 62916,
-        "volume": 0.06,
-        "type": "lvn"
+        "price": 62634,
+        "volume": 1.16,
+        "type": "vah"
       },
       {
-        "price": 62915,
-        "volume": 0.04,
-        "type": "lvn"
+        "price": 62633,
+        "volume": 3.1,
+        "type": "vah"
       },
       {
-        "price": 62914,
-        "volume": 0.2,
-        "type": "normal"
-      },
-      {
-        "price": 62913,
-        "volume": 0.01,
-        "type": "lvn"
-      },
-      {
-        "price": 62912,
-        "volume": 0.08,
-        "type": "lvn"
-      },
-      {
-        "price": 62910,
-        "volume": 0.1,
-        "type": "lvn"
-      },
-      {
-        "price": 62909,
-        "volume": 0.01,
-        "type": "lvn"
-      },
-      {
-        "price": 62908,
+        "price": 62632,
         "volume": 0.07,
+        "type": "vah"
+      },
+      {
+        "price": 62631,
+        "volume": 0.0,
+        "type": "vah"
+      },
+      {
+        "price": 62630,
+        "volume": 1.16,
+        "type": "normal"
+      },
+      {
+        "price": 62629,
+        "volume": 0.11,
         "type": "lvn"
       },
       {
-        "price": 62907,
-        "volume": 0.01,
+        "price": 62628,
+        "volume": 0.56,
+        "type": "normal"
+      },
+      {
+        "price": 62627,
+        "volume": 0.06,
         "type": "lvn"
       },
       {
-        "price": 62906,
-        "volume": 0.08,
+        "price": 62626,
+        "volume": 0.11,
         "type": "lvn"
       },
       {
-        "price": 62905,
-        "volume": 0.03,
+        "price": 62625,
+        "volume": 3.53,
+        "type": "hvn"
+      },
+      {
+        "price": 62624,
+        "volume": 0.17,
         "type": "lvn"
       },
       {
-        "price": 62904,
-        "volume": 0.09,
-        "type": "lvn"
+        "price": 62623,
+        "volume": 0.23,
+        "type": "poc"
       },
       {
-        "price": 62903,
-        "volume": 0.01,
-        "type": "lvn"
+        "price": 62622,
+        "volume": 3.98,
+        "type": "poc"
       },
       {
-        "price": 62902,
-        "volume": 0.08,
-        "type": "lvn"
+        "price": 62621,
+        "volume": 0.19,
+        "type": "poc"
       },
       {
-        "price": 62901,
-        "volume": 0.02,
-        "type": "lvn"
-      },
-      {
-        "price": 62900,
-        "volume": 1.09,
+        "price": 62620,
+        "volume": 0.12,
         "type": "val"
       },
       {
-        "price": 62899,
-        "volume": 0.04,
-        "type": "val"
-      },
-      {
-        "price": 62898,
-        "volume": 0.58,
-        "type": "val"
-      },
-      {
-        "price": 62897,
-        "volume": 0.58,
+        "price": 62619,
+        "volume": 2.56,
         "type": "val"
       }
     ]
