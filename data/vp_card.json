@@ -1,14 +1,25 @@
 {
   "vp_card": {
-    "btc_price": 64023,
+    "btc_price": 64017,
     "poc": 64700,
     "vah": 66350,
     "val": 64400,
     "consecutive_closes_outside_va": 13,
-    "shape": "b",
-    "direction": "SHORT",
-    "strategy_bias": "FOLLOW",
+    "shape": "D",
+    "direction": "DUAL",
+    "strategy_bias": "WAIT",
     "trade_setups": [
+      {
+        "direction": "LONG",
+        "entry": 64500,
+        "t1": 64700,
+        "t2": 66350,
+        "stop_loss": 64200,
+        "invalidation": 64300,
+        "rr_t1": 0.7,
+        "rr_t2": 6.2,
+        "status": "PENDING"
+      },
       {
         "direction": "SHORT",
         "entry": 66250,
@@ -18,7 +29,7 @@
         "invalidation": 66450,
         "rr_t1": 5.2,
         "rr_t2": 6.2,
-        "status": "ACTIVE"
+        "status": "PENDING"
       }
     ],
     "session": "ASIA",
@@ -27,8 +38,41 @@
     "hvn_range": "64100-65950",
     "size_recommendation": "NORMAL",
     "amt_lockout": false,
-    "last_updated": "2026-07-25T01:14:34.488493+00:00",
-    "generated_at": "2026-07-25T01:14:34.488493+00:00"
+    "last_updated": "2026-07-25T01:22:42.110419+00:00",
+    "generated_at": "2026-07-25T01:22:42.110419+00:00",
+    "verdict": {
+      "verdict": "NO_TRADE",
+      "status": "UNCERTAIN",
+      "confidence": 0,
+      "bias": "NEUTRAL",
+      "price_location": "BELOW_VAL",
+      "summary": "Evidence is insufficient or conflicting. No clear edge.",
+      "evidence": [
+        "Price below VAL\u2013$50 buffer",
+        "3+ hourly closes below VAL",
+        "Perpetual delta negative (-4.3%)"
+      ],
+      "warnings": [
+        "Spot delta is positive \u2014 divergence, shorts vulnerable"
+      ],
+      "confirmation_needed": [
+        "Wait for clearer market structure"
+      ],
+      "invalidation": "N/A",
+      "target": "N/A"
+    },
+    "developing_poc": "flat",
+    "perp_delta_pct": -4.26,
+    "perp_buy_vol": 71416,
+    "perp_sell_vol": 77771,
+    "spot_delta_pct": 22.73,
+    "oi_current": 108086,
+    "oi_change_pct": 1.86,
+    "funding_rate": 0.0066,
+    "mark_price": 63995,
+    "noise_buffer": 50,
+    "spot_24h_vol": 16846,
+    "perp_24h_vol": 148717
   },
   "chart_data": {
     "bins": [
@@ -124,22 +168,22 @@
       },
       {
         "price": 64000,
-        "volume": 2376,
+        "volume": 2386,
         "type": "normal"
       },
       {
         "price": 64050,
-        "volume": 1690,
+        "volume": 1700,
         "type": "normal"
       },
       {
         "price": 64100,
-        "volume": 2513,
+        "volume": 2524,
         "type": "hvn"
       },
       {
         "price": 64150,
-        "volume": 2570,
+        "volume": 2580,
         "type": "hvn"
       },
       {

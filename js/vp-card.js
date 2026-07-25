@@ -1,115 +1,29 @@
-// vp-card.js — Volume Profile V3.0 Card
-// Reads vp_card.json, auto-computes shape/state, renders card
+// vp-card.js — Volume Profile V3.1 Sentinel
+// Verdict-driven card with delta, OI, funding, confidence engine
 
-const VP_JSON_PATH = './data/vp_card.json'; // adjust to your path
+const VP_JSON_PATH = './data/vp_card.json';
 
-// ── Shape config ─────────────────────────────────
-const SHAPE_CONFIG = {
-  D: { cls: 'shape--D', label: 'We are in a Range (D)',    desc: 'Price is moving sideways between a floor and ceiling. Buy near the floor, sell near the ceiling.' },
-  P: { cls: 'shape--P', label: 'Trend Up (P)',  desc: 'Bulls in control — follow the trend' },
-  b: { cls: 'shape--b', label: 'Trend Down (b)', desc: 'Bears in control — don\'t fight it' },
-  B: { cls: 'shape--B', label: 'Dual Zone (B)',  desc: 'Two trading zones — wait for direction' },
+// ── Verdict config ──────────────────────────────
+const VERDICT_CONFIG = {
+  BULLISH_ACCEPTANCE:  { icon: '🟢', cls: 'verdict--bullish',  label: 'Bullish Acceptance' },
+  BEARISH_ACCEPTANCE:  { icon: '🔴', cls: 'verdict--bearish',  label: 'Bearish Acceptance' },
+  UPPER_REJECTION:     { icon: '🔻', cls: 'verdict--reject-up', label: 'Upper Rejection' },
+  LOWER_REJECTION:     { icon: '🔺', cls: 'verdict--reject-dn', label: 'Lower Rejection' },
+  BALANCED_ROTATION:   { icon: '⚖️', cls: 'verdict--balanced', label: 'Balanced Rotation' },
+  NO_TRADE:            { icon: '⛔', cls: 'verdict--notrade',  label: 'No Trade' },
 };
 
-// ── Auto-compute shape from pipeline data ─────────
-function computeShape(d) {
-  const { btc_price, vah, val, consecutive_closes_outside_va: closes } = d;
-  if (closes >= 2 && btc_price > vah) return 'P';
-  if (closes >= 2 && btc_price < val) return 'b';
-  if (btc_price >= val && btc_price <= vah && closes < 2) return 'D';
-  return d.shape || 'D'; // fallback to pipeline value
-}
+const CONFIDENCE_TIERS = [
+  { min: 75, label: 'STRONG',  cls: 'conf--strong' },
+  { min: 60, label: 'MODERATE', cls: 'conf--moderate' },
+  { min: 50, label: 'DEVELOPING', cls: 'conf--developing' },
+  { min: 1,  label: 'WEAK',   cls: 'conf--weak' },
+  { min: 0,  label: 'NONE',   cls: 'conf--none' },
+];
 
-// ── Auto-compute accept/reject state ──────────────
-function computeState(d) {
-  const closes = d.consecutive_closes_outside_va;
-  if (closes >= 2 && d.btc_price > d.vah) return 'REJECTION_UP';
-  if (closes >= 2 && d.btc_price < d.val) return 'REJECTION_DOWN';
-  return 'ACCEPTANCE';
-}
-
-// ── Probability tier pill ─────────────────────────
-function probPill(tier) {
-  const tips = {
-    VERY_HIGH:  'Very strong — multiple indicators aligned',
-    HIGH:       'Strong signal confidence',
-    REINFORCED: 'Reinforced by additional factors',
-    BASELINE:   'Standard signal confidence',
-  };
-  const map = {
-    VERY_HIGH:  ['pill--very-high',  'VERY HIGH'],
-    HIGH:       ['pill--high',       'HIGH'],
-    REINFORCED: ['pill--reinforced', 'REINFORCED'],
-    BASELINE:   ['pill--baseline',   'BASELINE'],
-  };
-  const [cls, label] = map[tier] || ['pill--baseline', tier];
-  const tip = tips[tier] || '';
-  return `<span class="vp-pill ${cls}" title="${tip}">${label}</span>`;
-}
-
-// ── Strategy bias pill ────────────────────────────
-function biasPill(bias) {
-  const tips = {
-    FADE:   'Fade the extremes — buy at VAL, sell at VAH (range strategy)',
-    FOLLOW: 'Follow the trend — buy pullbacks in uptrend, sell bounces in downtrend',
-    WAIT:   'No clear signal — wait for confirmation before entering',
-  };
-  const map = {
-    FADE:   ['pill--fade',   'FADE'],
-    FOLLOW: ['pill--follow', 'FOLLOW'],
-    WAIT:   ['pill--wait',   'WAIT'],
-  };
-  const [cls, label] = map[bias] || ['pill--wait', bias];
-  const tip = tips[bias] || '';
-  return `<span class="vp-pill ${cls}" title="${tip}">${label}</span>`;
-}
-
-// ── State pill ────────────────────────────────────
-function statePill(state) {
-  const tips = {
-    ACCEPTANCE:     'Price is inside Value Area — normal, no breakout',
-    REJECTION_UP:   'Price broke above VAH and stayed there — bullish breakout',
-    REJECTION_DOWN: 'Price broke below VAL and stayed there — bearish breakdown',
-  };
-  const map = {
-    ACCEPTANCE:     ['pill--acceptance',     'ACCEPTANCE'],
-    REJECTION_UP:   ['pill--rejection-up',   'REJECTION ↑'],
-    REJECTION_DOWN: ['pill--rejection-down', 'REJECTION ↓'],
-  };
-  const [cls, label] = map[state] || ['pill--baseline', state];
-  const tip = tips[state] || '';
-  return `<span class="vp-pill ${cls}" title="${tip}">${label}</span>`;
-}
-
-// ── Direction badge ──────────────────────────────
-function directionBadge(dir) {
-  const map = {
-    LONG:  ['dir--long',  'LONG',  'Buy — entry below, targets above'],
-    SHORT: ['dir--short', 'SHORT', 'Sell — entry above, targets below'],
-    DUAL:  ['dir--dual',  'DUAL',  'Two trade setups — see below'],
-  };
-  const [cls, label, tip] = map[dir] || ['dir--long', dir, ''];
-  return `<span class="vp-pill vp-dir-badge ${cls}" title="${tip}">${label}</span>`;
-}
-
-// ── Primary trade setup from data ──────────────────
-function getPrimarySetup(d) {
-  if (d.trade_setups && d.trade_setups.length > 0) return d.trade_setups[0];
-  // Fallback to flat fields (backward compat)
-  return {
-    direction: d.direction || 'LONG',
-    entry: d.entry_level,
-    t1: d.t1,
-    t2: d.t2,
-    stop_loss: d.stop_loss,
-    invalidation: d.invalidation,
-    rr_t1: d.rr_t1,
-    rr_t2: d.rr_t2,
-  };
-}
-
-// ── Format price ──────────────────────────────────
-const fmt = (n) => n ? `$${Number(n).toLocaleString()}` : '—';
+// ── Format helpers ───────────────────────────────
+const fmt = (n) => n != null ? `$${Number(n).toLocaleString()}` : '—';
+const fmtPct = (n) => n != null ? `${n >= 0 ? '+' : ''}${Number(n).toFixed(2)}%` : '—';
 const fmtTime = (iso) => {
   try {
     const d = new Date(iso);
@@ -117,23 +31,41 @@ const fmtTime = (iso) => {
            d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' UTC';
   } catch { return iso; }
 };
-// ── Format date for display ─────────────────────
-const fmtDate = (iso) => {
-  try {
-    const d = new Date(iso);
-    return d.toLocaleDateString([], { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
-  } catch { return iso; }
-};
-// ── Format next update time (+60s from last_updated)
-const fmtNextUpdate = (iso) => {
-  try {
-    const d = new Date(iso);
-    d.setSeconds(d.getSeconds() + 60);
-    return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' UTC';
-  } catch { return '—'; }
-};
 
-// ── Trade setup block HTML (for one setup) ─────────
+// ── Confidence bar ───────────────────────────────
+function renderConfidence(score) {
+  const tier = CONFIDENCE_TIERS.find(t => score >= t.min) || CONFIDENCE_TIERS[CONFIDENCE_TIERS.length - 1];
+  const pct = Math.max(0, Math.min(100, score));
+  return `
+  <div class="vp-conf-bar-wrap">
+    <div class="vp-conf-header">
+      <span class="vp-conf-label">Setup Confidence</span>
+      <span class="vp-conf-score ${tier.cls}">${score}% · ${tier.label}</span>
+    </div>
+    <div class="vp-conf-track">
+      <div class="vp-conf-fill ${tier.cls}" style="width:${pct}%"></div>
+    </div>
+  </div>`;
+}
+
+// ── Evidence list ─────────────────────────────────
+function renderEvidence(items, type) {
+  if (!items || items.length === 0) return '';
+  const config = {
+    evidence:            { icon: '✓', cls: 'ev--for' },
+    warnings:            { icon: '⚠', cls: 'ev--warn' },
+    confirmation_needed: { icon: '→', cls: 'ev--pending' },
+  };
+  const cfg = config[type] || { icon: '·', cls: '' };
+  const label = type === 'evidence' ? 'Evidence' : type === 'warnings' ? 'Warnings' : 'Confirmation Needed';
+  return `
+  <div class="vp-evidence-block ${cfg.cls}">
+    <div class="vp-evidence-title">${label}</div>
+    ${items.map(e => `<div class="vp-evidence-row"><span class="ev-icon">${cfg.icon}</span> ${e}</div>`).join('')}
+  </div>`;
+}
+
+// ── Trade setup ──────────────────────────────────
 function renderTradeSetup(setup, label, session) {
   const dir = setup.direction || 'LONG';
   const t2Label = dir === 'SHORT' ? 'VAL' : 'VAH';
@@ -145,165 +77,95 @@ function renderTradeSetup(setup, label, session) {
   return `
   <div class="vp-trade-setup"${dimClass}>
     <div class="block-title">${label} — ${session || ''} Session</div>
-    <div class="vp-trade-row" title="Suggested entry price for the current strategy">
+    <div class="vp-trade-row" title="Suggested entry price">
       <span class="trade-label">Entry</span>
       <span class="trade-value trade-entry">${fmt(setup.entry)}</span>
     </div>
-    <div class="vp-trade-row" title="First profit target — POC level (primary magnet)">
+    <div class="vp-trade-row" title="First profit target — POC">
       <span class="trade-label">T1 — POC</span>
-      <span class="trade-value trade-t1">
-        ${fmt(setup.t1)}
-        ${rrClass1}
-      </span>
+      <span class="trade-value trade-t1">${fmt(setup.t1)} ${rrClass1}</span>
     </div>
     <div class="vp-trade-row" title="Second profit target">
       <span class="trade-label">T2 — ${t2Label}</span>
-      <span class="trade-value trade-t2">
-        ${fmt(setup.t2)}
-        ${rrClass2}
-      </span>
+      <span class="trade-value trade-t2">${fmt(setup.t2)} ${rrClass2}</span>
     </div>
-    <div class="vp-trade-row" title="Stop loss — exit trade if price reaches this level">
+    <div class="vp-trade-row" title="Stop loss">
       <span class="trade-label">Stop</span>
       <span class="trade-value trade-stop">${fmt(setup.stop_loss)}</span>
     </div>
     ${setup.invalidation != null ? `
-    <div class="vp-trade-row" title="If price reaches this level, the trade thesis is invalid">
+    <div class="vp-trade-row" title="Invalidation level">
       <span class="trade-label">Invalidation</span>
       <span class="trade-value" style="color:#6b7280">${fmt(setup.invalidation)}</span>
     </div>` : ''}
   </div>`;
 }
 
-// ── Bottom-line conclusion for beginners ──────────
-function renderVerdict(d, shape, state) {
-  const price = d.btc_price || 0;
-  const poc = d.poc;
-  const vah = d.vah;
-  const val = d.val;
-  const hvn = d.hvn_range;
-  const bias = d.strategy_bias;
-  const dir = d.direction || 'LONG';
-  const amtLock = d.amt_lockout;
-  const sizeRec = d.size_recommendation;
-
-  const bullets = [];
-
-  // Where is price?
-  if (state === 'ACCEPTANCE') {
-    bullets.push(`Price at <strong>${fmt(price)}</strong> — inside the Value Area (normal range, no breakout)`);
-  } else if (state === 'REJECTION_UP') {
-    bullets.push(`Price at <strong>${fmt(price)}</strong> — <span class="t-green">above VAH</span> (bullish breakout in progress)`);
-  } else {
-    bullets.push(`Price at <strong>${fmt(price)}</strong> — <span class="t-red">below VAL</span> (bearish breakdown in progress)`);
-  }
-
-  // POC magnet
-  bullets.push(`Primary magnet at <strong>${fmt(poc)}</strong> — price tends to get pulled toward the busiest level`);
-
-  // VAH/VAL touches
-  const vahT = d.touch_count_vah || 0;
-  const valT = d.touch_count_val || 0;
-  if (vahT === 0 && valT === 0) {
-    bullets.push(`No VAH/VAL touches yet — the edges of fair value haven't been tested`);
-  } else {
-    if (vahT > 0) bullets.push(`VAH touched <strong>${vahT}×</strong> — resistance is being tested`);
-    if (valT > 0) bullets.push(`VAL touched <strong>${valT}×</strong> — support is being tested`);
-  }
-
-  // HVN magnet zone
-  if (hvn && hvn !== 'N/A') {
-    bullets.push(`HVN magnet zone at <strong>$${hvn.replace(/-/g, '–$')}</strong> — thick trading area, strong support/resistance`);
-  }
-
-  // Strategy summary
-  const biasSummary = {
-    FADE: 'Fade the extremes — buy near VAL, sell near VAH',
-    FOLLOW: 'Follow the trend — buy pullbacks (uptrend) or sell bounces (downtrend)',
-    WAIT: 'Wait for a clearer signal before entering',
-  };
-  const dirSummary = {
-    LONG: 'looking to buy',
-    SHORT: 'looking to sell',
-    DUAL: 'watching both directions',
-  };
-  bullets.push(`Strategy: <strong>${biasSummary[bias] || bias}</strong>, ${dirSummary[dir] || dir}`);
-
-  // Size / AMT note
-  if (sizeRec && sizeRec !== 'NORMAL') {
-    bullets.push(`Position sizing: <strong>${sizeRec.replace(/_/g, ' ')}</strong> — adjust risk accordingly`);
-  }
-  if (amtLock) {
-    bullets.push(`<span class="t-orange">⚠ AMT bot is active</span> — automated trading may affect price action`);
-  }
-
-  return `<div class="vp-verdict">
-    <div class="verdict-title">📋 Bottom Line</div>
-    <ul class="verdict-list">
-      ${bullets.map(b => `<li>${b}</li>`).join('\n      ')}
-    </ul>
+// ── Metrics bar ───────────────────────────────────
+function renderMetricsBar(d) {
+  return `
+  <div class="vp-metrics-bar">
+    <div class="vp-metric" title="Spot buy/sell delta from recent trades">
+      <span class="met-label">Spot Δ</span>
+      <span class="met-value ${d.spot_delta_pct >= 0 ? 't-green' : 't-red'}">${fmtPct(d.spot_delta_pct)}</span>
+    </div>
+    <div class="vp-metric" title="Perpetual futures taker buy/sell delta">
+      <span class="met-label">Perp Δ</span>
+      <span class="met-value ${d.perp_delta_pct >= 0 ? 't-green' : 't-red'}">${fmtPct(d.perp_delta_pct)}</span>
+    </div>
+    <div class="vp-metric" title="1-hour open interest change">
+      <span class="met-label">OI Δ</span>
+      <span class="met-value ${d.oi_change_pct >= 0 ? 't-green' : 't-red'}">${fmtPct(d.oi_change_pct)}</span>
+    </div>
+    <div class="vp-metric" title="Current funding rate">
+      <span class="met-label">Funding</span>
+      <span class="met-value">${fmtPct(d.funding_rate)}</span>
+    </div>
+    <div class="vp-metric" title="POC migration direction (15min)">
+      <span class="met-label">POC</span>
+      <span class="met-value ${d.developing_poc === 'rising' ? 't-green' : d.developing_poc === 'falling' ? 't-red' : ''}">${d.developing_poc || 'flat'}</span>
+    </div>
   </div>`;
 }
 
-// ── Pill legend (what each badge means) ───────────
-function renderPillLegend(direction, state, bias, prob, amtLock) {
-  // Only show on first render — toggle visibility
-  return `<details class="vp-legend">
-    <summary class="legend-toggle">ℹ️ What do these mean?</summary>
-    <div class="legend-body">
-      <div class="legend-item">
-        <span class="legend-key dir--short">SHORT</span>
-        <span class="legend-desc">Trade direction — the card suggests a <strong>sell</strong> setup. Opposite: LONG = buy.</span>
-      </div>
-      <div class="legend-item">
-        <span class="legend-key pill--acceptance">ACCEPTANCE</span>
-        <span class="legend-desc">Price is <strong>inside</strong> the Value Area — no breakout happening. Normal, sideways market.</span>
-      </div>
-      <div class="legend-item">
-        <span class="legend-key pill--fade">FADE</span>
-        <span class="legend-desc">Strategy bias — <strong>fade the extremes</strong>. Buy near VAL (support), sell near VAH (resistance).</span>
-      </div>
-      <div class="legend-item">
-        <span class="legend-key pill--baseline">BASELINE</span>
-        <span class="legend-desc">Confidence tier — <strong>standard signal</strong>. The setup meets baseline criteria but isn't reinforced by extra factors.</span>
-      </div>
-      <div class="legend-item">
-        <span class="legend-key pill--lockout">AMT LOCKOUT</span>
-        <span class="legend-desc"><strong>AMT bot is running</strong> — an automated trading bot is active. Price may behave differently than usual.</span>
-      </div>
+// ── Invalidation / Target bar ─────────────────────
+function renderInvTarget(verdict) {
+  if (!verdict || verdict.verdict === 'NO_TRADE' || verdict.verdict === 'BALANCED_ROTATION') return '';
+  return `
+  <div class="vp-inv-target">
+    <div class="vp-it-row">
+      <span class="it-label">Invalidation</span>
+      <span class="it-value">${verdict.invalidation || '—'}</span>
     </div>
-  </details>`;
+    ${verdict.target ? `
+    <div class="vp-it-row">
+      <span class="it-label">Target</span>
+      <span class="it-value t-green">${verdict.target}</span>
+    </div>` : ''}
+  </div>`;
 }
 
-// ── Render card ───────────────────────────────────
+// ── Main render ──────────────────────────────────
 function renderVPCard(raw, mountId = 'vp-card-mount') {
   const d = raw.vp_card;
-  const shape = computeShape(d);
-  const state = computeState(d);
-  const sc = SHAPE_CONFIG[shape];
-  const direction = d.direction || 'LONG';
+  const verdict = d.verdict || {};
+  const verdictKey = verdict.verdict || 'NO_TRADE';
+  const vc = VERDICT_CONFIG[verdictKey] || VERDICT_CONFIG.NO_TRADE;
   const setups = d.trade_setups || [];
-  const isDual = direction === 'DUAL' && setups.length === 2;
-  const primary = getPrimarySetup(d);
+  const direction = d.direction || 'NEUTRAL';
 
-  // Trade block HTML
+  // Trade block
   let tradeBlock = '';
-  if (isDual) {
+  if (setups.length === 2) {
     tradeBlock = `
   <div class="vp-trade-block">
     ${renderTradeSetup(setups[0], '🔵 LONG Setup', d.session)}
     ${renderTradeSetup(setups[1], '🔴 SHORT Setup', d.session)}
   </div>`;
-  } else if (setups.length > 0) {
+  } else if (setups.length > 0 && verdictKey !== 'NO_TRADE') {
     tradeBlock = `
   <div class="vp-trade-block">
     ${renderTradeSetup(setups[0], `${direction} Setup`, d.session)}
-  </div>`;
-  } else {
-    // Backward compat — no trade_setups array
-    tradeBlock = `
-  <div class="vp-trade-block">
-    ${renderTradeSetup(primary, `${direction} Setup`, d.session)}
   </div>`;
   }
 
@@ -311,57 +173,63 @@ function renderVPCard(raw, mountId = 'vp-card-mount') {
 <div class="vp-card">
 
   <div class="vp-card___header">
-    <span class="vp-cardtitle">Volume Profile</span>
-    <span class="vp-card___updated">Updated ${fmtTime(d.last_updated)} · Next ${fmtNextUpdate(d.last_updated)}</span>
+    <span class="vp-cardtitle">Volume Profile Sentinel</span>
+    <span class="vp-card___updated">Updated ${fmtTime(d.last_updated)}</span>
   </div>
 
-  <div class="vp-shape-badge ${sc.cls}" title="Market structure: ${sc.label} — ${sc.desc}">
-    <span class="shape-label">${sc.label}</span>
-    <span class="shape-desc">${sc.desc}</span>
+  <!-- VERDICT BANNER -->
+  <div class="vp-verdict-banner ${vc.cls}">
+    <span class="verdict-icon">${vc.icon}</span>
+    <div class="verdict-main">
+      <span class="verdict-label">${vc.label}</span>
+      <span class="verdict-status">${verdict.status || ''}</span>
+    </div>
   </div>
 
+  <div class="vp-verdict-summary">${verdict.summary || ''}</div>
+
+  ${renderConfidence(verdict.confidence || 0)}
+
+  <!-- EVIDENCE / WARNINGS -->
+  ${renderEvidence(verdict.evidence, 'evidence')}
+  ${renderEvidence(verdict.warnings, 'warnings')}
+  ${renderEvidence(verdict.confirmation_needed, 'confirmation_needed')}
+
+  ${renderInvTarget(verdict)}
+
+  <!-- LEVELS GRID -->
   <div class="vp-levels">
-    <div class="vp-level-item level-poc"
-         title="Point of Control: the busiest price. Acts as a magnet — price often returns here.">
+    <div class="vp-level-item level-poc" title="Point of Control: busiest price, acts as magnet">
       <div class="level-label">POC</div>
       <div class="level-value">${fmt(d.poc)}</div>
       <div class="level-sub">Primary magnet</div>
     </div>
-    <div class="vp-level-item level-vah"
-         title="Value Area High: ceiling of fair value. Resistance and bullish breakout point.">
+    <div class="vp-level-item level-vah" title="Value Area High: ceiling of fair value">
       <div class="level-label">VAH</div>
       <div class="level-value">${fmt(d.vah)}</div>
-      <div class="level-sub">Touches: ${d.touch_count_vah}</div>
+      <div class="level-sub">Touches: ${d.touch_count_vah || 0}</div>
     </div>
-    <div class="vp-level-item level-val"
-         title="Value Area Low: floor of fair value. Support and bearish breakdown point.">
+    <div class="vp-level-item level-val" title="Value Area Low: floor of fair value">
       <div class="level-label">VAL</div>
       <div class="level-value">${fmt(d.val)}</div>
-      <div class="level-sub">Touches: ${d.touch_count_val}</div>
+      <div class="level-sub">Touches: ${d.touch_count_val || 0}</div>
     </div>
-    <div class="vp-level-item level-hvn"
-         title="High Volume Node: thick trading zone. Strong support or resistance.">
+    <div class="vp-level-item level-hvn" title="High Volume Node: thick trading zone">
       <div class="level-label">HVN</div>
       <div class="level-value">${d.hvn_range ? '$' + d.hvn_range.replace('-', '–$') : '—'}</div>
       <div class="level-sub">Magnet zone</div>
     </div>
   </div>
 
-  ${renderVerdict(d, shape, state)}
+  <!-- METRICS BAR -->
+  ${renderMetricsBar(d)}
 
   ${tradeBlock}
 
-  <div class="vp-card-row" style="display:flex;gap:6px;margin-top:4px">
-    <span class="trade-label">Size</span>
-    <span class="trade-value trade-size">
-      ${(d.size_recommendation || '—').replace('_', ' ')}
-    </span>
-  </div>
-
-  <div class="vp-links">
-    <a class="vp-link-btn" href="#amt-status-card">↗ AMT Status + VP×AMT Table</a>
-    <a class="vp-link-btn" href="#liquidity-card">↗ Liquidity — CVD/Absorption</a>
-  </div>
+  ${verdictKey === 'NO_TRADE' ? `
+  <div class="vp-notrade-note">
+    ⛔ <strong>NO TRADE</strong> — The system is withholding a trade recommendation because evidence is conflicting or insufficient. This is a feature, not a failure. Not trading is often the best trade.
+  </div>` : ''}
 
   <div id="vp-chart-container" class="vp-chart"></div>
 
@@ -370,13 +238,12 @@ function renderVPCard(raw, mountId = 'vp-card-mount') {
   const mount = document.getElementById(mountId);
   if (mount) mount.innerHTML = html;
 
-  // Render chart if chart_data present
   if (raw.chart_data && raw.chart_data.bins) {
     renderVPChart(raw, 'vp-chart-container');
   }
 }
 
-// ── Fetch + render ────────────────────────────────
+// ── Fetch + render ───────────────────────────────
 async function loadVPCard(mountId = 'vp-card-mount') {
   try {
     const res = await fetch(`${VP_JSON_PATH}?t=${Date.now()}`);
@@ -386,10 +253,9 @@ async function loadVPCard(mountId = 'vp-card-mount') {
   } catch (err) {
     const mount = document.getElementById(mountId);
     if (mount) mount.innerHTML =
-      `<div class="vp-card" style="color:#f87171">VP card load failed: ${err.message}</div>`;
+      `<div class="vp-card" style="color:#f87171;padding:20px">VP card load failed: ${err.message}</div>`;
   }
 }
 
-// ── Auto-refresh every 60s ────────────────────────
 loadVPCard();
 setInterval(() => loadVPCard(), 60_000);

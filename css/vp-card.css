@@ -1,4 +1,4 @@
-/* ── VP Card — mobile-first ──────────────────── */
+/* ── VP Card V3.1 — mobile-first ──────────────────── */
 .vp-card {
   background: #111827;
   border: 1px solid #1f2937;
@@ -29,68 +29,122 @@
   color: #4b5563;
 }
 
-/* Shape badge */
-.vp-shape-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
-  border-radius: 8px;
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  margin-bottom: 14px;
-  width: 100%;
-  box-sizing: border-box;
-}
-.vp-shape-badge .shape-label { font-size: 13px; font-weight: 500; }
-.vp-shape-badge .shape-desc  { font-size: 11px; opacity: 0.75; margin-left: auto; }
-
-.shape--D { background: #1e2d40; color: #60a5fa; }
-.shape--P { background: #14291f; color: #34d399; }
-.shape--b { background: #2d1515; color: #f87171; }
-.shape--B { background: #2a1f3d; color: #c084fc; }
-
-/* State row */
-.vp-state-row {
+/* ── Verdict Banner ──────────────────────────── */
+.vp-verdict-banner {
   display: flex;
-  gap: 8px;
-  margin-bottom: 14px;
-  flex-wrap: nowrap;
-  overflow-x: auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  border: 1px solid transparent;
+}
+.verdict-icon { font-size: 28px; flex-shrink: 0; }
+.verdict-main { display: flex; flex-direction: column; }
+.verdict-label { font-size: 16px; font-weight: 700; }
+.verdict-status { font-size: 11px; opacity: 0.7; margin-top: 2px; }
+
+.verdict--bullish  { background: #0d2818; border-color: #166534; color: #34d399; }
+.verdict--bearish  { background: #2d1414; border-color: #7f1d1d; color: #f87171; }
+.verdict--reject-up { background: #2d2014; border-color: #7c2d12; color: #fb923c; }
+.verdict--reject-dn{ background: #1a2e1a; border-color: #166534; color: #4ade80; }
+.verdict--balanced { background: #1e2d40; border-color: #1e3a5f; color: #60a5fa; }
+.verdict--notrade  { background: #1f1a2e; border-color: #3b2e5a; color: #a78bfa; }
+
+.vp-verdict-summary {
+  font-size: 12px;
+  color: #9ca3af;
+  line-height: 1.5;
+  margin-bottom: 12px;
+  padding: 0 2px;
 }
 
-.vp-pill {
+/* ── Confidence Bar ──────────────────────────── */
+.vp-conf-bar-wrap { margin-bottom: 14px; }
+.vp-conf-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+.vp-conf-label { font-size: 10px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.06em; }
+.vp-conf-score { font-size: 11px; font-weight: 700; }
+.conf--strong     { color: #34d399; }
+.conf--moderate   { color: #60a5fa; }
+.conf--developing { color: #fbbf24; }
+.conf--weak       { color: #f87171; }
+.conf--none       { color: #6b7280; }
+
+.vp-conf-track {
+  width: 100%;
+  height: 6px;
+  background: #1f2937;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.vp-conf-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+.vp-conf-fill.conf--strong     { background: #34d399; }
+.vp-conf-fill.conf--moderate   { background: #60a5fa; }
+.vp-conf-fill.conf--developing { background: #fbbf24; }
+.vp-conf-fill.conf--weak       { background: #f87171; }
+.vp-conf-fill.conf--none       { background: #374151; }
+
+/* ── Evidence Blocks ─────────────────────────── */
+.vp-evidence-block {
+  background: #1a2235;
+  border: 1px solid #1f2937;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+}
+.vp-evidence-title {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6b7280;
+  margin-bottom: 6px;
+}
+.vp-evidence-row {
   font-size: 11px;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-weight: 600;
-  white-space: nowrap;
+  color: #d1d5db;
+  padding: 3px 0;
+  line-height: 1.45;
 }
-.pill--acceptance  { background: #14291f; color: #34d399; }
-.pill--rejection-up   { background: #14291f; color: #34d399; }
-.pill--rejection-down { background: #2d1515; color: #f87171; }
-.pill--fade    { background: #1e2d40; color: #60a5fa; }
-.pill--follow  { background: #14291f; color: #34d399; }
-.pill--wait    { background: #2a1f3d; color: #c084fc; }
-/* Direction badge */
-.vp-dir-badge { font-weight: 700; font-size: 11px; padding: 2px 10px; }
-.dir--long   { background: #0d2818; color: #34d399; }
-.dir--short  { background: #2d1414; color: #f87171; }
-.dir--dual   { background: #1f1a2e; color: #a78bfa; }
-.pill--lockout { background: #3b1f08; color: #fb923c; }
-.pill--clear   { background: #14291f; color: #34d399; }
-.pill--high       { background: #1e2d40; color: #60a5fa; }
-.pill--very-high  { background: #14291f; color: #34d399; }
-.pill--reinforced { background: #2a1f3d; color: #c084fc; }
-.pill--baseline   { background: #1f2937; color: #9ca3af; }
+.ev-icon { margin-right: 6px; font-size: 10px; }
+.ev--for .vp-evidence-row { color: #34d399; }
+.ev--for .vp-evidence-title { color: #34d399; }
+.ev--warn .vp-evidence-row { color: #fb923c; }
+.ev--warn .vp-evidence-title { color: #fb923c; }
+.ev--pending .vp-evidence-row { color: #6b7280; }
+.ev--pending .vp-evidence-title { color: #6b7280; }
 
-/* Levels grid */
+/* ── Invalidation/Target bar ─────────────────── */
+.vp-inv-target {
+  background: #1a2235;
+  border: 1px solid #1f2937;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 14px;
+}
+.vp-it-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3px 0;
+  font-size: 12px;
+}
+.it-label { color: #6b7280; }
+.it-value { color: #f9fafb; font-weight: 600; }
+
+/* ── Levels grid ─────────────────────────────── */
 .vp-levels {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 
 .vp-level-item {
@@ -124,7 +178,48 @@
 .level-val .level-value { color: #34d399; }
 .level-hvn .level-value { color: #a78bfa; font-size: 13px; }
 
-/* Trade setup */
+/* ── Metrics bar ─────────────────────────────── */
+.vp-metrics-bar {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.vp-metric {
+  flex: 1;
+  min-width: 55px;
+  background: #1f2937;
+  border-radius: 6px;
+  padding: 8px 6px;
+  text-align: center;
+}
+.met-label {
+  display: block;
+  font-size: 9px;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+}
+.met-value {
+  font-size: 12px;
+  font-weight: 700;
+  color: #f9fafb;
+}
+
+/* ── No-trade note ───────────────────────────── */
+.vp-notrade-note {
+  background: #1f1a2e;
+  border: 1px solid #3b2e5a;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 11px;
+  color: #a78bfa;
+  line-height: 1.45;
+  margin-bottom: 14px;
+}
+
+/* ── Trade setup ─────────────────────────────── */
 .vp-trade-block {
   background: #1a2235;
   border: 1px solid #1f2937;
@@ -160,113 +255,12 @@
 .trade-stop  { color: #f87171 !important; }
 .trade-size  { color: #fb923c !important; }
 
-/* Links */
-.vp-links {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.vp-link-btn {
-  flex: 1;
-  min-width: 120px;
-  text-align: center;
-  background: #1f2937;
-  color: #9ca3af;
-  border: 1px solid #374151;
-  border-radius: 8px;
-  padding: 8px 10px;
-  font-size: 11px;
-  cursor: pointer;
-  text-decoration: none;
-  transition: background 0.15s, color 0.15s;
-}
-.vp-link-btn:hover { background: #374151; color: #f9fafb; }
-
-/* Bottom Line verdict */
-.vp-verdict {
-  background: #1a2235;
-  border: 1px solid #1f2937;
-  border-radius: 8px;
-  padding: 12px 14px;
-  margin-bottom: 14px;
-}
-.verdict-title {
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: #a78bfa;
-  margin-bottom: 8px;
-  font-weight: 700;
-}
-.verdict-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.verdict-list li {
-  font-size: 11px;
-  color: #d1d5db;
-  padding: 4px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-  line-height: 1.5;
-}
-.verdict-list li:last-child { border-bottom: none; }
+/* ── Shared colors ───────────────────────────── */
 .t-green { color: #34d399; }
 .t-red   { color: #f87171; }
 .t-orange { color: #fb923c; }
 
-/* Pill legend */
-.vp-legend {
-  margin-bottom: 12px;
-  font-size: 11px;
-}
-.legend-toggle {
-  color: #6b7280;
-  cursor: pointer;
-  user-select: none;
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 4px 0;
-}
-.legend-toggle:hover { color: #9ca3af; }
-.legend-body {
-  background: #1a2235;
-  border: 1px solid #1f2937;
-  border-radius: 8px;
-  padding: 10px 12px;
-  margin-top: 6px;
-}
-.legend-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 5px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-}
-.legend-item:last-child { border-bottom: none; }
-.legend-key {
-  font-size: 10px;
-  padding: 2px 8px;
-  border-radius: 12px;
-  font-weight: 600;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-.legend-desc {
-  color: #9ca3af;
-  line-height: 1.45;
-}
-
-/* Desktop scale-up */
-@media (min-width: 640px) {
-  .vp-card { padding: 20px; }
-  .vp-levels { grid-template-columns: 1fr 1fr 1fr 1fr; }
-  .vp-shape-badge { font-size: 26px; }
-}
-
-/* Volume Profile chart container */
+/* ── Volume Profile chart container ──────────── */
 .vp-chart {
   width: 100%;
   max-width: 100%;
@@ -285,7 +279,6 @@
   box-sizing: border-box;
 }
 
-/* Horizontal chart layout */
 .vp-chart-horizontal {
   display: flex;
   align-items: flex-end;
@@ -297,7 +290,6 @@
   box-sizing: border-box;
 }
 
-/* Single vertical column bar */
 .vp-bar-horizontal {
   flex: 1;
   min-width: 2px;
@@ -305,28 +297,17 @@
   transition: height 0.3s ease;
 }
 
-/* Colors matching requirement 4: POC=yellow, VAH=red, VAL=green, HVN=purple, LVN=dim */
 .vp-bar-horizontal.poc {
   background: #facc15;
   box-shadow: 0 0 8px rgba(250, 204, 21, 0.5);
 }
-.vp-bar-horizontal.vah {
-  background: #f87171;
-}
-.vp-bar-horizontal.val {
-  background: #34d399;
-}
-.vp-bar-horizontal.hvn {
-  background: #a78bfa;
-}
-.vp-bar-horizontal.lvn {
-  background: rgba(55, 65, 81, 0.3);
-}
-.vp-bar-horizontal.normal {
-  background: rgba(75, 85, 99, 0.4);
-}
+.vp-bar-horizontal.vah { background: #f87171; }
+.vp-bar-horizontal.val { background: #34d399; }
+.vp-bar-horizontal.hvn { background: #a78bfa; }
+.vp-bar-horizontal.lvn { background: rgba(55, 65, 81, 0.3); }
+.vp-bar-horizontal.normal { background: rgba(75, 85, 99, 0.4); }
 
-/* NOW Marker & Track */
+/* NOW Marker */
 .vp-now-track-horizontal {
   position: relative;
   height: 16px;
@@ -343,7 +324,7 @@
   font-weight: bold;
 }
 
-/* Labels under the chart */
+/* Chart labels */
 .vp-labels-row-horizontal {
   position: relative;
   margin-top: 4px;
@@ -360,7 +341,6 @@
   white-space: nowrap;
 }
 
-/* Labels colors */
 .vp-x-label.poc { color: #facc15; }
 .vp-x-label.vah { color: #f87171; }
 .vp-x-label.val { color: #34d399; }
@@ -375,10 +355,9 @@
 .vp-x-label.vah .vp-label-title { background: rgba(248, 113, 113, 0.15); }
 .vp-x-label.val .vp-label-title { background: rgba(52, 211, 153, 0.15); }
 
-/* Vertical dashed lines extending up through chart */
 .vp-line-dashed {
   position: absolute;
-  bottom: 30px; /* offset to start above the label text */
+  bottom: 30px;
   left: 50%;
   border-left: 1px dashed;
   pointer-events: none;
@@ -394,4 +373,12 @@
   font-size: 10px;
   color: #6b7280;
   font-family: monospace;
+}
+
+/* ── Desktop scale-up ────────────────────────── */
+@media (min-width: 640px) {
+  .vp-card { padding: 20px; }
+  .vp-levels { grid-template-columns: 1fr 1fr 1fr 1fr; }
+  .vp-verdict-banner { padding: 14px 20px; }
+  .verdict-label { font-size: 18px; }
 }
