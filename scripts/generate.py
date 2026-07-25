@@ -469,9 +469,13 @@ def compute_verdict(price, poc, vah, val, consecutive_closes, perp, spot):
 # ── TRADE SETUPS ──────────────────────────────────
 
 def compute_trade_setups(price, poc, vah, val, verdict):
-    """Generate trade setups based on verdict and bias."""
+    """Generate trade setups only when verdict has a directional bias."""
     setups = []
     bias = verdict.get("bias", "NEUTRAL")
+
+    # Don't generate setups for NO_TRADE or BALANCED_ROTATION
+    if verdict.get("verdict") in ("NO_TRADE", "BALANCED_ROTATION"):
+        return setups
 
     if bias in ("LONG", "NEUTRAL"):
         entry = val + 100

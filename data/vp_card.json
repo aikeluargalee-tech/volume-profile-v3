@@ -1,6 +1,6 @@
 {
   "vp_card": {
-    "btc_price": 64017,
+    "btc_price": 64030,
     "poc": 64700,
     "vah": 66350,
     "val": 64400,
@@ -8,38 +8,15 @@
     "shape": "D",
     "direction": "DUAL",
     "strategy_bias": "WAIT",
-    "trade_setups": [
-      {
-        "direction": "LONG",
-        "entry": 64500,
-        "t1": 64700,
-        "t2": 66350,
-        "stop_loss": 64200,
-        "invalidation": 64300,
-        "rr_t1": 0.7,
-        "rr_t2": 6.2,
-        "status": "PENDING"
-      },
-      {
-        "direction": "SHORT",
-        "entry": 66250,
-        "t1": 64700,
-        "t2": 64400,
-        "stop_loss": 66550,
-        "invalidation": 66450,
-        "rr_t1": 5.2,
-        "rr_t2": 6.2,
-        "status": "PENDING"
-      }
-    ],
+    "trade_setups": [],
     "session": "ASIA",
     "touch_count_vah": 18,
     "touch_count_val": 14,
     "hvn_range": "64100-65950",
     "size_recommendation": "NORMAL",
     "amt_lockout": false,
-    "last_updated": "2026-07-25T01:22:42.110419+00:00",
-    "generated_at": "2026-07-25T01:22:42.110419+00:00",
+    "last_updated": "2026-07-25T01:27:16.363161+00:00",
+    "generated_at": "2026-07-25T01:27:16.363161+00:00",
     "verdict": {
       "verdict": "NO_TRADE",
       "status": "UNCERTAIN",
@@ -65,14 +42,14 @@
     "perp_delta_pct": -4.26,
     "perp_buy_vol": 71416,
     "perp_sell_vol": 77771,
-    "spot_delta_pct": 22.73,
+    "spot_delta_pct": 16.87,
     "oi_current": 108086,
     "oi_change_pct": 1.86,
-    "funding_rate": 0.0066,
-    "mark_price": 63995,
+    "funding_rate": 0.0069,
+    "mark_price": 64008,
     "noise_buffer": 50,
-    "spot_24h_vol": 16846,
-    "perp_24h_vol": 148717
+    "spot_24h_vol": 16840,
+    "perp_24h_vol": 148724
   },
   "chart_data": {
     "bins": [
@@ -168,22 +145,22 @@
       },
       {
         "price": 64000,
-        "volume": 2386,
+        "volume": 2388,
         "type": "normal"
       },
       {
         "price": 64050,
-        "volume": 1700,
+        "volume": 1703,
         "type": "normal"
       },
       {
         "price": 64100,
-        "volume": 2524,
+        "volume": 2526,
         "type": "hvn"
       },
       {
         "price": 64150,
-        "volume": 2580,
+        "volume": 2583,
         "type": "hvn"
       },
       {

@@ -154,15 +154,16 @@ function renderVPCard(raw, mountId = 'vp-card-mount') {
   const setups = d.trade_setups || [];
   const direction = d.direction || 'NEUTRAL';
 
-  // Trade block
+  // Trade block — hidden on NO_TRADE / BALANCED_ROTATION
   let tradeBlock = '';
-  if (setups.length === 2) {
+  const showTrade = verdictKey !== 'NO_TRADE' && verdictKey !== 'BALANCED_ROTATION';
+  if (showTrade && setups.length === 2) {
     tradeBlock = `
   <div class="vp-trade-block">
     ${renderTradeSetup(setups[0], '🔵 LONG Setup', d.session)}
     ${renderTradeSetup(setups[1], '🔴 SHORT Setup', d.session)}
   </div>`;
-  } else if (setups.length > 0 && verdictKey !== 'NO_TRADE') {
+  } else if (showTrade && setups.length > 0) {
     tradeBlock = `
   <div class="vp-trade-block">
     ${renderTradeSetup(setups[0], `${direction} Setup`, d.session)}
