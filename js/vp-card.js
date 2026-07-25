@@ -232,6 +232,10 @@ function renderVPCard(raw, mountId = 'vp-card-mount') {
     ⛔ <strong>NO TRADE</strong> — The system is withholding a trade recommendation because evidence is conflicting or insufficient. This is a feature, not a failure. Not trading is often the best trade.
   </div>` : ''}
 
+  <div class="vp-links">
+    <a class="vp-link-btn" href="https://aikeluargalee-tech.github.io/pipeline-dashboard-v3/market-regime/" target="_blank">↗ Market Regime</a>
+  </div>
+
   <div id="vp-chart-container" class="vp-chart"></div>
 
 </div>`;
