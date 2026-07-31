@@ -2,10 +2,10 @@
   "vp_card": {
     "shape": "b",
     "direction": "SHORT",
-    "poc": 64388,
-    "vah": 64390,
-    "val": 64378,
-    "hvn_range": "64382-64389",
+    "poc": 63700,
+    "vah": 63703,
+    "val": 63700,
+    "hvn_range": "63700-63701",
     "touch_count_val": 0,
     "touch_count_vah": 0,
     "probability_tier": "BASELINE",
@@ -18,127 +18,92 @@
     "amt_lockout": true,
     "amt_verdict": "NO_TRADE",
     "adx": 0,
-    "entry_level": 64392,
-    "t1": 64388,
-    "t2": 64378,
-    "stop_loss": 64392,
-    "invalidation": 64394,
-    "rr_t1": 10.0,
-    "rr_t2": 35.0,
+    "entry_level": 63705,
+    "t1": 63700,
+    "t2": 63700,
+    "stop_loss": 63703,
+    "invalidation": 63704,
+    "rr_t1": 3.57,
+    "rr_t2": 3.57,
     "size_recommendation": "SKIP",
     "trade_setups": [
       {
         "direction": "SHORT",
-        "entry": 64392,
-        "t1": 64388,
-        "t2": 64378,
-        "stop_loss": 64392,
-        "invalidation": 64394,
-        "rr_t1": 10.0,
-        "rr_t2": 35.0
+        "entry": 63705,
+        "t1": 63700,
+        "t2": 63700,
+        "stop_loss": 63703,
+        "invalidation": 63704,
+        "rr_t1": 3.57,
+        "rr_t2": 3.57
       }
     ],
-    "btc_price": 64372,
+    "btc_price": 63695,
     "session": "LONDON",
-    "last_updated": "2026-07-31T06:28:45.185112+00:00"
+    "last_updated": "2026-07-31T09:31:15.270985+00:00"
   },
   "chart_data": {
     "bin_size": 1,
-    "max_volume": 12.03,
+    "max_volume": 7.71,
     "bins": [
       {
-        "price": 64390,
-        "volume": 1.3,
+        "price": 63706,
+        "volume": 1.19,
+        "type": "normal"
+      },
+      {
+        "price": 63705,
+        "volume": 0.0,
         "type": "vah"
       },
       {
-        "price": 64389,
-        "volume": 1.09,
-        "type": "poc"
+        "price": 63704,
+        "volume": 0.02,
+        "type": "vah"
       },
       {
-        "price": 64388,
-        "volume": 12.03,
-        "type": "poc"
+        "price": 63703,
+        "volume": 7.7,
+        "type": "vah"
       },
       {
-        "price": 64387,
-        "volume": 1.66,
-        "type": "poc"
-      },
-      {
-        "price": 64386,
-        "volume": 1.23,
-        "type": "normal"
-      },
-      {
-        "price": 64385,
-        "volume": 1.62,
-        "type": "normal"
-      },
-      {
-        "price": 64384,
-        "volume": 0.83,
-        "type": "lvn"
-      },
-      {
-        "price": 64383,
-        "volume": 3.45,
-        "type": "normal"
-      },
-      {
-        "price": 64382,
-        "volume": 2.08,
-        "type": "normal"
-      },
-      {
-        "price": 64381,
-        "volume": 0.0,
-        "type": "lvn"
-      },
-      {
-        "price": 64380,
-        "volume": 3.06,
-        "type": "val"
-      },
-      {
-        "price": 64379,
-        "volume": 0.36,
-        "type": "val"
-      },
-      {
-        "price": 64378,
-        "volume": 5.23,
-        "type": "val"
-      },
-      {
-        "price": 64377,
+        "price": 63702,
         "volume": 0.08,
+        "type": "vah"
+      },
+      {
+        "price": 63701,
+        "volume": 0.13,
+        "type": "poc"
+      },
+      {
+        "price": 63700,
+        "volume": 7.71,
+        "type": "poc"
+      },
+      {
+        "price": 63699,
+        "volume": 0.01,
+        "type": "poc"
+      },
+      {
+        "price": 63698,
+        "volume": 0.54,
         "type": "val"
       },
       {
-        "price": 64376,
-        "volume": 1.86,
-        "type": "val"
-      },
-      {
-        "price": 64375,
-        "volume": 0.1,
+        "price": 63697,
+        "volume": 0.13,
         "type": "lvn"
       },
       {
-        "price": 64374,
-        "volume": 1.09,
+        "price": 63696,
+        "volume": 0.03,
         "type": "lvn"
       },
       {
-        "price": 64373,
-        "volume": 0.0,
-        "type": "lvn"
-      },
-      {
-        "price": 64372,
-        "volume": 5.1,
+        "price": 63695,
+        "volume": 2.59,
         "type": "normal"
       }
     ]
