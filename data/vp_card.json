@@ -1,125 +1,120 @@
 {
   "vp_card": {
-    "shape": "P",
-    "direction": "LONG",
-    "poc": 63080,
-    "vah": 63084,
-    "val": 63080,
-    "hvn_range": "63080-63082",
+    "shape": "b",
+    "direction": "SHORT",
+    "poc": 63114,
+    "vah": 63114,
+    "val": 63113,
+    "hvn_range": "63113-63114",
     "touch_count_val": 0,
     "touch_count_vah": 0,
     "probability_tier": "BASELINE",
-    "acceptance_rejection_state": "ACCEPTANCE",
+    "acceptance_rejection_state": "REJECTION_DOWN",
     "rejection_direction": null,
-    "consecutive_closes_outside_va": 0,
+    "consecutive_closes_outside_va": 1,
     "confirmation_status": "PENDING",
     "active_pattern": "POC_MAGNET",
-    "strategy_bias": "FADE",
+    "strategy_bias": "FOLLOW",
     "amt_lockout": true,
     "amt_verdict": "NO_TRADE",
     "adx": 0,
-    "entry_level": 63078,
-    "t1": 63080,
-    "t2": 63088,
-    "stop_loss": 63079,
-    "invalidation": 63079,
-    "rr_t1": 1.43,
-    "rr_t2": 7.14,
+    "entry_level": 63116,
+    "t1": 63114,
+    "t2": 63113,
+    "stop_loss": 63114,
+    "invalidation": 63114,
+    "rr_t1": 1.11,
+    "rr_t2": 1.67,
     "size_recommendation": "SKIP",
     "trade_setups": [
       {
-        "direction": "LONG",
-        "entry": 63078,
-        "t1": 63080,
-        "t2": 63088,
-        "stop_loss": 63079,
-        "invalidation": 63079,
-        "rr_t1": 1.43,
-        "rr_t2": 7.14
+        "direction": "SHORT",
+        "entry": 63116,
+        "t1": 63114,
+        "t2": 63113,
+        "stop_loss": 63114,
+        "invalidation": 63114,
+        "rr_t1": 1.11,
+        "rr_t2": 1.67
       }
     ],
-    "btc_price": 63080,
+    "btc_price": 63107,
     "session": "LONDON",
-    "last_updated": "2026-08-01T13:46:12.133033+00:00"
+    "last_updated": "2026-08-01T14:47:16.803787+00:00"
   },
   "chart_data": {
     "bin_size": 1,
-    "max_volume": 19.0,
+    "max_volume": 11.65,
     "bins": [
       {
-        "price": 63094,
-        "volume": 2.55,
-        "type": "normal"
+        "price": 63120,
+        "volume": 0.63,
+        "type": "lvn"
       },
       {
-        "price": 63093,
+        "price": 63119,
+        "volume": 0.0,
+        "type": "lvn"
+      },
+      {
+        "price": 63118,
         "volume": 0.13,
         "type": "lvn"
       },
       {
-        "price": 63092,
-        "volume": 0.28,
-        "type": "lvn"
-      },
-      {
-        "price": 63091,
-        "volume": 0.17,
-        "type": "lvn"
-      },
-      {
-        "price": 63090,
-        "volume": 0.05,
-        "type": "lvn"
-      },
-      {
-        "price": 63089,
+        "price": 63117,
         "volume": 0.0,
         "type": "lvn"
       },
       {
-        "price": 63088,
-        "volume": 0.05,
-        "type": "lvn"
-      },
-      {
-        "price": 63087,
-        "volume": 0.04,
-        "type": "lvn"
-      },
-      {
-        "price": 63086,
-        "volume": 0.48,
+        "price": 63116,
+        "volume": 0.3,
         "type": "vah"
       },
       {
-        "price": 63085,
-        "volume": 0.0,
-        "type": "vah"
-      },
-      {
-        "price": 63084,
-        "volume": 5.1,
-        "type": "vah"
-      },
-      {
-        "price": 63083,
-        "volume": 0.0,
-        "type": "vah"
-      },
-      {
-        "price": 63082,
-        "volume": 0.04,
-        "type": "vah"
-      },
-      {
-        "price": 63081,
-        "volume": 0.12,
+        "price": 63115,
+        "volume": 0.02,
         "type": "poc"
       },
       {
-        "price": 63080,
-        "volume": 19.0,
+        "price": 63114,
+        "volume": 11.65,
         "type": "poc"
+      },
+      {
+        "price": 63113,
+        "volume": 10.19,
+        "type": "poc"
+      },
+      {
+        "price": 63112,
+        "volume": 0.08,
+        "type": "vah"
+      },
+      {
+        "price": 63111,
+        "volume": 0.36,
+        "type": "val"
+      },
+      {
+        "price": 63110,
+        "volume": 0.03,
+        "type": "lvn"
+      },
+      {
+        "price": 63109,
+        "volume": 0.03,
+        "type": "lvn"
+      },
+      {
+        "price": 63108,
+        "volume": 4.82,
+        "type": "normal"
+      },
+      {
+        "price": 63107,
+        "volume": 1.91,
+        "type": "normal"
       }
     ]
   }
